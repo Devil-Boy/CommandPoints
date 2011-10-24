@@ -1,0 +1,9 @@
+#
+# CommandPoints Configuration
+#
+
+# Point Gain/Loss Console Output
+#	Use this option if you wish to have events
+#	regarding the gain or loss of command points
+#	show up in your console.
+gainlossConsoleOutput=false

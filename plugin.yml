@@ -1,0 +1,5 @@
+name: CommandPoints
+main: pgDev.bukkit.CommandPoints.CommandPoints
+version: 0.1
+author: Devil Boy
+description: A command-based merit system.
