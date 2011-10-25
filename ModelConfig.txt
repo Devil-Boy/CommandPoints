@@ -7,3 +7,14 @@
 #	regarding the gain or loss of command points
 #	show up in your console.
 gainlossConsoleOutput=false
+
+# Log Events
+#	Here you can list the events that you wish
+#	to appear in your CommandPoints log (separated
+#	by spaces). Example: gain loss check
+#
+#	Possible events:
+#		gain - Whenever a player gains points
+#		loss - Whenever a player loses/spends points
+#		check - Whenever a player checks his points
+logEvents=gain loss
