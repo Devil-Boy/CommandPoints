@@ -20,7 +20,8 @@ import org.bukkit.plugin.PluginManager;
 /**
  * CommandPoints for Bukkit
  *
- * @author DevilBoy
+ * @author PG Dev Team
+ * @author Devil Boy
  */
 public class CommandPoints extends JavaPlugin {
     private final CommandPointsPlayerListener playerListener = new CommandPointsPlayerListener(this);
@@ -89,10 +90,16 @@ public class CommandPoints extends JavaPlugin {
     }
     
     
+    // Plugin Developer API
+    public CommandPointsAPI getAPI(JavaPlugin linkingPlugin) {
+    	return new CommandPointsAPI(this, linkingPlugin);
+    }
+    
+    
     // Database loading and saving
     
     // Load Points Database
-    public HashMap<String, Integer> loadPointsDatabase() {
+    protected HashMap<String, Integer> loadPointsDatabase() {
     	try{
     		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(pointsDBLocation));
     		Object result = ois.readObject();
@@ -105,7 +112,7 @@ public class CommandPoints extends JavaPlugin {
     }
     
     // Save Points Database
-    public void savePointsDatabase() {
+    protected void savePointsDatabase() {
     	try{
     		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(pointsDBLocation));
     		oos.writeObject(playerPoints);
@@ -120,7 +127,7 @@ public class CommandPoints extends JavaPlugin {
     // Database Interaction Methods/Functions
     
     // Give a user points
-    public void addPoints(String playerName, int amount, String reason) {
+    protected void addPoints(String playerName, int amount, String reason) {
     	if (playerPoints.containsKey(playerName)) {
     		playerPoints.put(playerName, playerPoints.get(playerName) + amount);
     	} else {
@@ -129,24 +136,24 @@ public class CommandPoints extends JavaPlugin {
     }
     
     // Remove a user's points
-    public void removePoints(String playerName, int amount, String reason) {
+    protected void removePoints(String playerName, int amount, String reason) {
     	if (playerPoints.containsKey(playerName)) {
     		playerPoints.put(playerName, playerPoints.get(playerName) - amount);
     	}
     }
     
     // Output a user's number of points
-    public int checkPoints(String playerName) {
+    protected int checkPoints(String playerName) {
     	return playerPoints.get(playerName);
     }
     
     // Create a user account
-    public void makeAccount(String playerName) {
+    protected void makeAccount(String playerName) {
     	playerPoints.put(playerName, 0);
     }
     
     // Check if player has an account
-    public boolean hasAccount(String playerName) {
+    protected boolean hasAccount(String playerName) {
     	return playerPoints.containsKey(playerName);
     }
 }

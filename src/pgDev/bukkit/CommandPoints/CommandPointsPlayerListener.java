@@ -10,7 +10,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
  * Handle events for all Player related events
- * @author DevilBoy
+ * 
+ * @author PG Dev Team
+ * @author Devil Boy
  */
 public class CommandPointsPlayerListener extends PlayerListener {
     private final CommandPoints plugin;

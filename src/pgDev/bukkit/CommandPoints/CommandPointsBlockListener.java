@@ -9,7 +9,9 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 
 /**
  * CommandPoints block listener
- * @author DevilBoy
+ * 
+ * @author PG Dev Team
+ * @author Devil Boy
  */
 public class CommandPointsBlockListener extends BlockListener {
     private final CommandPoints plugin;

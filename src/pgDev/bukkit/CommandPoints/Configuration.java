@@ -11,7 +11,12 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 
-
+/**
+ * CommandPoints Configuration
+ *
+ * @author PG Dev Team
+ * @author Devil Boy
+ */
 public class Configuration {
 	private Properties properties;
 	private final CommandPoints plugin;
