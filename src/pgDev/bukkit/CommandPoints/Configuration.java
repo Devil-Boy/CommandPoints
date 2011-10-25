@@ -24,7 +24,7 @@ public class Configuration {
 	
 	// List of Config Options
 	boolean gainlossConsoleOutput;
-	boolean logging; // Will change
+	String logEvents;
 	
 	public Configuration(Properties p, final CommandPoints plugin) {
         properties = p;
@@ -32,6 +32,7 @@ public class Configuration {
         
         // Grab values here.
         gainlossConsoleOutput = getBoolean("gainlossConsoleOutput", false);
+        logEvents = getString("logEvents", "gain loss");
 	}
 	
 	// Value obtaining functions down below
@@ -155,10 +156,20 @@ public class Configuration {
     		out.write("#	regarding the gain or loss of command points\r\n");
     		out.write("#	show up in your console.\r\n");
     		out.write("gainlossConsoleOutput=" + gainlossConsoleOutput + "\r\n");
+    		out.write("\r\n");
+    		out.write("# Log Events\r\n");
+    		out.write("#	Here you can list the events that you wish\r\n");
+    		out.write("#	to appear in your CommandPoints log (separated\r\n");
+    		out.write("#	by spaces). Example: gain loss check\r\n");
+    		out.write("#\r\n");
+    		out.write("#	Possible events:\r\n");
+    		out.write("#		gain - Whenever a player gains points\r\n");
+    		out.write("#		loss - Whenever a player loses/spends points\r\n");
+    		out.write("#		check - Whenever a player checks his points\r\n");
+    		out.write("logEvents=" + logEvents + "\r\n");
     		out.close();
     	} catch (Exception e) {
     		System.out.println(e);
-    		// Not sure what to do? O.o
     	}
     }
 }
