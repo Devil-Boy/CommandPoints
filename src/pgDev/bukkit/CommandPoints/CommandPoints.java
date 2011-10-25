@@ -42,6 +42,8 @@ public class CommandPoints extends JavaPlugin {
     String pluginConfigLocation = pluginMainDir + "/CommandPoints.cfg";
     String pointsDBLocation = pluginMainDir + "/playerPointsDB.dat";
     
+    TransLogger thelogger;
+    
     // Plugin Configuration
     Configuration pluginSettings;
 
@@ -81,6 +83,8 @@ public class CommandPoints extends JavaPlugin {
         	// Create the database file!
     		savePointsDatabase();
         }
+        
+        thelogger = new FlatFileLogger();
     	
     	// Register our events
         PluginManager pm = getServer().getPluginManager();
