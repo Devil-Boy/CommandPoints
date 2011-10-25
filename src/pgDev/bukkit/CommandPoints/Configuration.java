@@ -19,6 +19,7 @@ public class Configuration {
 	
 	// List of Config Options
 	boolean gainlossConsoleOutput;
+	boolean logging; // Will change
 	
 	public Configuration(Properties p, final CommandPoints plugin) {
         properties = p;
@@ -139,10 +140,6 @@ public class Configuration {
     // Config creation method
     public void createConfig() {
     	try{
-    		File configfile = new File(plugin.pluginMainDir);
-    		if(!configfile.exists()) {
-    			configfile.mkdirs();
-    		}
     		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(plugin.pluginConfigLocation)));
     		out.write("#\r\n");
     		out.write("# CommandPoints Configuration\r\n");

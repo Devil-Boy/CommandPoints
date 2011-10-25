@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -18,6 +19,12 @@ public class CommandPointsPlayerListener extends PlayerListener {
         plugin = instance;
     }
 
-    //Insert Player related code here
+    // Event functions below
+    
+    public void onPlayerJoin(PlayerJoinEvent event) {
+    	if (!plugin.hasAccount(event.getPlayer().getName())) {
+    		plugin.makeAccount(event.getPlayer().getName());
+    	}
+    }
 }
 
