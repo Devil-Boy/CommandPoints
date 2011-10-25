@@ -170,6 +170,7 @@ public class CommandPoints extends JavaPlugin {
     	} else {
     		playerPoints.put(playerName, new Double(amount));
     	}
+    	thelogger.logTransaction("deposit", playerName, amount, reason, "N/A");
     }
     
     // Remove a user's points
