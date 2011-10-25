@@ -1,13 +1,20 @@
 package pgDev.bukkit.CommandPoints;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Properties;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 import org.bukkit.Server;
 import org.bukkit.event.Event.Priority;
@@ -28,7 +35,7 @@ public class CommandPoints extends JavaPlugin {
     //private final CommandPointsBlockListener blockListener = new CommandPointsBlockListener(this);
     
     // Player Points Database
-    private HashMap<String, Integer> playerPoints = new HashMap<String, Integer>();
+    private HashMap<String, Double> playerPoints = new HashMap<String, Double>();
 
     // File Locations
     String pluginMainDir = "./plugins/CommandPoints";
@@ -69,7 +76,7 @@ public class CommandPoints extends JavaPlugin {
         
         // Load the Points Database
         if ((new File(pointsDBLocation)).exists()) {
-        	playerPoints = loadPointsDatabase();
+        	loadPointsDatabase();
         } else {
         	// Create the database file!
     		savePointsDatabase();
@@ -99,58 +106,83 @@ public class CommandPoints extends JavaPlugin {
     
     // Database loading and saving
     
-    // Load Points Database
-    protected HashMap<String, Integer> loadPointsDatabase() {
-    	try{
-    		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(pointsDBLocation));
-    		Object result = ois.readObject();
-    		//you can feel free to cast result to HashMap<Player,Boolean> if you know there's that HashMap in the file
-    		return (HashMap<String, Integer>)result;
-    	} catch(Exception e){
-    		e.printStackTrace();
-    	}
-		return playerPoints;
-    }
-    
-    // Save Points Database
-    protected void savePointsDatabase() {
-    	try{
-    		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(pointsDBLocation));
-    		oos.writeObject(playerPoints);
-    		oos.flush();
-    		oos.close();
-    	} catch(Exception e){
-    		e.printStackTrace();
-    	}
-    }
+    protected void loadPointsDatabase() {
+
+		// check for existing file
+		File configFile = new File(pointsDBLocation);
+		
+		//if it exists, let's read it, if it doesn't, let's create it.
+		if (configFile.exists()) {
+			try {
+				playerPoints.clear();
+				Properties theprices = new Properties();
+				theprices.load(new FileInputStream(configFile));
+				Iterator<Entry<Object, Object>> iprices = theprices.entrySet().iterator();
+				while(iprices.hasNext()) {
+					Entry<Object, Object> price = iprices.next();
+					try {
+						playerPoints.put(price.getKey().toString().toLowerCase(), new Double(price.getValue().toString()));
+					}catch (NumberFormatException ex) {
+						System.out.println("[CommandPoints] Unable to parse the value for player " + price.getKey().toString());
+					}
+				}
+			} catch (IOException e) {
+				
+			}
+		}else {
+			System.out.println("[CommandPoints] Points file not found, creating it.");
+			savePointsDatabase();
+		}
+		
+	}
+
+
+
+	protected void savePointsDatabase() {
+		try {
+			BufferedWriter outChannel = new BufferedWriter(new FileWriter(pointsDBLocation));
+			outChannel.write("# This contains all of the player's points. In normal circumstances\n" +
+					"# this file should not be edited directly. Change their amounts in game.\n" +
+					"\n" +
+					"\n");
+			 Set<Entry<String, Double>> ppoints = playerPoints.entrySet();
+			for(Entry tpoints : ppoints) {
+				outChannel.write(tpoints.getKey().toString() + " = " + String.valueOf(tpoints.getValue()) + "\n");
+			}
+			outChannel.close();
+		} catch (Exception e) {
+			System.out.println("[CommandPoints] ERRROR! Point file creation failed, points not saved to disk!");
+		}
+		
+	}
     
     
     // Database Interaction Methods/Functions (Hooks)
     
     // Give a user points
-    protected void hAddPoints(String playerName, int amount, String reason) {
+    protected void hAddPoints(String playerName, double amount, String reason) {
     	if (playerPoints.containsKey(playerName)) {
-    		playerPoints.put(playerName, playerPoints.get(playerName) + amount);
+    		playerPoints.put(playerName, new Double(playerPoints.get(playerName).doubleValue() + amount));
     	} else {
-    		playerPoints.put(playerName, amount);
+    		playerPoints.put(playerName, new Double(amount));
     	}
     }
     
     // Remove a user's points
-    protected void hRemovePoints(String playerName, int amount, String reason) {
+    protected void hRemovePoints(String playerName, double amount, String reason) {
     	if (playerPoints.containsKey(playerName)) {
-    		playerPoints.put(playerName, playerPoints.get(playerName) - amount);
+    		playerPoints.put(playerName, new Double(playerPoints.get(playerName).doubleValue() - amount));
     	}
     }
     
     // Output a user's number of points
-    protected int hCheckPoints(String playerName) {
-    	return playerPoints.get(playerName);
+    protected double hCheckPoints(String playerName) {
+    	return playerPoints.get(playerName).doubleValue();
     }
     
     // Create a user account
     protected void hMakeAccount(String playerName) {
-    	playerPoints.put(playerName, 0);
+    	playerPoints.put(playerName, (double)0);
     }
     
     // Check if player has an account
@@ -167,7 +199,7 @@ public class CommandPoints extends JavaPlugin {
 	 * @param amount How many points
 	 * @param reason Why he's getting the points
 	 */
-	public void addPoints(String playerName, int amount, String reason) {
+	public void addPoints(String playerName, double amount, String reason) {
 		hAddPoints(playerName, amount, reason);
 	}
 	
@@ -177,7 +209,7 @@ public class CommandPoints extends JavaPlugin {
 	 * @param amount How many points
 	 * @param reason Why he's losing the points
 	 */
-	public void removePoints(String playerName, int amount, String reason) {
+	public void removePoints(String playerName, double amount, String reason) {
 		hRemovePoints(playerName, amount, reason);
 	}
 	
@@ -186,8 +218,9 @@ public class CommandPoints extends JavaPlugin {
 	 * @param playerName The player we want to find about
 	 * @return How many points the player has
 	 */
-	public int getPoints(String playerName) {
+	public double getPoints(String playerName) {
 		return hCheckPoints(playerName);
 	}
+	
 }
 
