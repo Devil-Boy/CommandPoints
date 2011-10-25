@@ -91,9 +91,10 @@ public class CommandPoints extends JavaPlugin {
     
     
     // Plugin Developer API
+    /* No Longer
     public CommandPointsAPI getAPI(JavaPlugin linkingPlugin) {
     	return new CommandPointsAPI(this, linkingPlugin);
-    }
+    }*/
     
     
     // Database loading and saving
@@ -124,10 +125,10 @@ public class CommandPoints extends JavaPlugin {
     }
     
     
-    // Database Interaction Methods/Functions
+    // Database Interaction Methods/Functions (Hooks)
     
     // Give a user points
-    protected void addPoints(String playerName, int amount, String reason) {
+    protected void hAddPoints(String playerName, int amount, String reason) {
     	if (playerPoints.containsKey(playerName)) {
     		playerPoints.put(playerName, playerPoints.get(playerName) + amount);
     	} else {
@@ -136,25 +137,57 @@ public class CommandPoints extends JavaPlugin {
     }
     
     // Remove a user's points
-    protected void removePoints(String playerName, int amount, String reason) {
+    protected void hRemovePoints(String playerName, int amount, String reason) {
     	if (playerPoints.containsKey(playerName)) {
     		playerPoints.put(playerName, playerPoints.get(playerName) - amount);
     	}
     }
     
     // Output a user's number of points
-    protected int checkPoints(String playerName) {
+    protected int hCheckPoints(String playerName) {
     	return playerPoints.get(playerName);
     }
     
     // Create a user account
-    protected void makeAccount(String playerName) {
+    protected void hMakeAccount(String playerName) {
     	playerPoints.put(playerName, 0);
     }
     
     // Check if player has an account
-    protected boolean hasAccount(String playerName) {
+    protected boolean hHasAccount(String playerName) {
     	return playerPoints.containsKey(playerName);
     }
+    
+    
+    // Developer API Functions and Methods (API)
+    
+    /**
+	 * Give points to a player
+	 * @param playerName The player receiving the points
+	 * @param amount How many points
+	 * @param reason Why he's getting the points
+	 */
+	public void addPoints(String playerName, int amount, String reason) {
+		hAddPoints(playerName, amount, reason);
+	}
+	
+	/**
+	 * Remove points from a player
+	 * @param playerName The player losing the points
+	 * @param amount How many points
+	 * @param reason Why he's losing the points
+	 */
+	public void removePoints(String playerName, int amount, String reason) {
+		hRemovePoints(playerName, amount, reason);
+	}
+	
+	/**
+	 * Get how many points a player has
+	 * @param playerName The player we want to find about
+	 * @return How many points the player has
+	 */
+	public int getPoints(String playerName) {
+		return hCheckPoints(playerName);
+	}
 }
 

@@ -24,8 +24,8 @@ public class CommandPointsPlayerListener extends PlayerListener {
     // Event functions below
     
     public void onPlayerJoin(PlayerJoinEvent event) {
-    	if (!plugin.hasAccount(event.getPlayer().getName())) {
-    		plugin.makeAccount(event.getPlayer().getName());
+    	if (!plugin.hHasAccount(event.getPlayer().getName())) {
+    		plugin.hMakeAccount(event.getPlayer().getName());
     	}
     }
 }
