@@ -14,6 +14,8 @@ import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
 import org.bukkit.Server;
@@ -31,8 +33,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 /**
  * CommandPoints for Bukkit
  *
- * @author PG Dev Team
- * @author Devil Boy
+ * @author PG Dev Team (Devil Boy, Tux2)
  */
 public class CommandPoints extends JavaPlugin {
     private final CommandPointsPlayerListener playerListener = new CommandPointsPlayerListener(this);
@@ -49,9 +50,9 @@ public class CommandPoints extends JavaPlugin {
     String pointsDBLocation = pluginMainDir + "/playerPointsDB.dat";
     
     // Abstract Logger and Enums
-    TransLogger thelogger;
+    protected TransLogger thelogger;
     
-    protected enum EventType {
+    public enum EventType {
     	GAIN, LOSS, CHECK, NEWACCOUNT
     }
     
@@ -126,7 +127,7 @@ public class CommandPoints extends JavaPlugin {
         }
     }
     
-    public static boolean hasPermissions(Player player, String node) {
+    protected static boolean hasPermissions(Player player, String node) {
         if (Permissions != null) {
         	return Permissions.has(player, node);
         } else {
@@ -136,6 +137,11 @@ public class CommandPoints extends JavaPlugin {
     
     
     // Plugin Developer API
+    /**
+     * Obtain the API
+     *
+     * @return The CommandPoints Plugin Developer API
+     */
     CommandPointsAPI theAPI = new CommandPointsAPI(this);
     public CommandPointsAPI getAPI() {
     	return theAPI;
@@ -192,6 +198,19 @@ public class CommandPoints extends JavaPlugin {
 			System.out.println("[CommandPoints] ERRROR! Point file creation failed, points not saved to disk!");
 		}
 		
+	}
+	
+	
+	// Command Listener
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		// TODO: Put console runnable commands here
+		if (cmd.getName().equals("database")) {
+			
+		} else if (cmd.getName().equalsIgnoreCase("give")) {
+			
+		}
+		// I'll finish this all later...
+		return false;
 	}
     
     

@@ -2,6 +2,11 @@ package pgDev.bukkit.CommandPoints;
 
 import pgDev.bukkit.CommandPoints.CommandPoints.EventType;
 
+/**
+ * Abstract Logger Class
+ *
+ * @author PG Dev Team (Devil Boy, Tux2)
+ */
 public abstract class TransLogger {
 	
 	public abstract void logTransaction(EventType type, String player, double amount, String reason, String plugin);

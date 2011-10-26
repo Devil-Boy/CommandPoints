@@ -17,4 +17,5 @@ gainlossConsoleOutput=false
 #		gain - Whenever a player gains points
 #		loss - Whenever a player loses/spends points
 #		check - Whenever a player checks his points
+#		newaccount - Whenever a new account is made
 logEvents=gain loss

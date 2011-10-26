@@ -2,6 +2,11 @@ package pgDev.bukkit.CommandPoints;
 
 import pgDev.bukkit.CommandPoints.CommandPoints.EventType;
 
+/**
+ * Flat File Logger
+ *
+ * @author PG Dev Team (Devil Boy, Tux2)
+ */
 public class FlatFileLogger extends TransLogger {
 
 	@Override

@@ -3,10 +3,9 @@ package pgDev.bukkit.CommandPoints;
 import org.bukkit.plugin.Plugin;
 
 /**
- * CommandPoints for Bukkit
+ * CommandPoints API
  *
- * @author PG Dev Team
- * @author Devil Boy
+ * @author PG Dev Team (Devil Boy, Nat)
  */
 public class CommandPointsAPI {
 	CommandPoints cp;

@@ -14,8 +14,7 @@ import java.util.Properties;
 /**
  * CommandPoints Configuration
  *
- * @author PG Dev Team
- * @author Devil Boy
+ * @author PG Dev Team (Devil Boy)
  */
 public class Configuration {
 	private Properties properties;
@@ -166,6 +165,7 @@ public class Configuration {
     		out.write("#		gain - Whenever a player gains points\r\n");
     		out.write("#		loss - Whenever a player loses/spends points\r\n");
     		out.write("#		check - Whenever a player checks his points\r\n");
+    		out.write("#		newaccount - Whenever a new account is made\r\n");
     		out.write("logEvents=" + logEvents + "\r\n");
     		out.close();
     	} catch (Exception e) {
