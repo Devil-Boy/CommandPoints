@@ -3,11 +3,8 @@ package pgDev.bukkit.CommandPoints;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
@@ -16,14 +13,11 @@ import java.util.Set;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.Player;
-import org.bukkit.Server;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.PluginManager;
 
@@ -190,7 +184,7 @@ public class CommandPoints extends JavaPlugin {
 					"\n" +
 					"\n");
 			 Set<Entry<String, Double>> ppoints = playerPoints.entrySet();
-			for(Entry tpoints : ppoints) {
+			for(Entry<String, Double> tpoints : ppoints) {
 				outChannel.write(tpoints.getKey().toString() + " = " + String.valueOf(tpoints.getValue()) + "\n");
 			}
 			outChannel.close();
