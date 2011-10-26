@@ -136,8 +136,9 @@ public class CommandPoints extends JavaPlugin {
     
     
     // Plugin Developer API
+    CommandPointsAPI theAPI = new CommandPointsAPI(this);
     public CommandPointsAPI getAPI() {
-    	return new CommandPointsAPI(this);
+    	return theAPI;
     }
     
     
