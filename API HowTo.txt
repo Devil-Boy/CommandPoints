@@ -1,6 +1,24 @@
 // Add CommandPoints.jar as an external archive then import the API class using:
 import pgDev.bukkit.CommandPoints.*;
 
+// Declare the CommandPoints variable:
+CommandPointsAPI cpAPI;
+
+
+// Recommended Method
+
+// Run this function from onEnable.
+private void setupCommandPoints() {
+    Plugin commandPoints = this.getServer().getPluginManager().getPlugin("CommandPoints");
+    
+    if (commandPoints != null) {
+        cpAPi = ((CommandPoints)commandPoints).getAPI(this);
+    }
+}
+
+
+// Alternate Method
+
 // Here is the function you should add to your plugin's main class.
 // It outputs the CommandPointsAPI class so don't forget to assign this to a variable.
 private CommandPointsAPI getCommandPointsAPI() {
@@ -11,10 +29,6 @@ private CommandPointsAPI getCommandPointsAPI() {
     }
 }
 
-// Example:
-
-// To assign the API as a variable, put this in your variable declarations.
-CommandPointsAPI cpAPI;
-
-// Then in your onEnable function add this.
+// In your onEnable function add this.
 cpAPI = getCommandPointsAPI();
+

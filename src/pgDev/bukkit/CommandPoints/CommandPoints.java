@@ -19,10 +19,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.Server;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.PluginManager;
+
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 
 /**
  * CommandPoints for Bukkit
@@ -32,7 +36,9 @@ import org.bukkit.plugin.PluginManager;
  */
 public class CommandPoints extends JavaPlugin {
     private final CommandPointsPlayerListener playerListener = new CommandPointsPlayerListener(this);
-    //private final CommandPointsBlockListener blockListener = new CommandPointsBlockListener(this);
+    
+    // Permissions Integration
+    private static PermissionHandler Permissions;
     
     // Player Points Database
     private HashMap<String, Double> playerPoints = new HashMap<String, Double>();
@@ -42,7 +48,12 @@ public class CommandPoints extends JavaPlugin {
     String pluginConfigLocation = pluginMainDir + "/CommandPoints.cfg";
     String pointsDBLocation = pluginMainDir + "/playerPointsDB.dat";
     
+    // Abstract Logger and Enums
     TransLogger thelogger;
+    
+    protected enum EventType {
+    	GAIN, LOSS, CHECK, NEWACCOUNT
+    }
     
     // Plugin Configuration
     Configuration pluginSettings;
@@ -89,6 +100,9 @@ public class CommandPoints extends JavaPlugin {
     	// Register our events
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
+        
+        // Permissions turn on!
+    	setupPermissions();
 
         // Console output (Tells us we're alive)
         PluginDescriptionFile pdfFile = this.getDescription();
@@ -100,12 +114,31 @@ public class CommandPoints extends JavaPlugin {
         System.out.println("CommandPoints disabled!");
     }
     
+    // Permissions Methods
+    private void setupPermissions() {
+        Plugin permissions = this.getServer().getPluginManager().getPlugin("Permissions");
+
+        if (Permissions == null) {
+            if (permissions != null) {
+                Permissions = ((Permissions)permissions).getHandler();
+            } else {
+            }
+        }
+    }
+    
+    public static boolean hasPermissions(Player player, String node) {
+        if (Permissions != null) {
+        	return Permissions.has(player, node);
+        } else {
+            return player.hasPermission(node);
+        }
+    }
+    
     
     // Plugin Developer API
-    /* No Longer
-    public CommandPointsAPI getAPI(JavaPlugin linkingPlugin) {
-    	return new CommandPointsAPI(this, linkingPlugin);
-    }*/
+    public CommandPointsAPI getAPI() {
+    	return new CommandPointsAPI(this);
+    }
     
     
     // Database loading and saving
@@ -164,68 +197,55 @@ public class CommandPoints extends JavaPlugin {
     // Database Interaction Methods/Functions (Hooks)
     
     // Give a user points
-    protected void hAddPoints(String playerName, double amount, String reason) {
+    protected void addPoints(String playerName, double amount, String reason, Plugin plugin) {
     	if (playerPoints.containsKey(playerName)) {
     		playerPoints.put(playerName, new Double(playerPoints.get(playerName).doubleValue() + amount));
     	} else {
     		playerPoints.put(playerName, new Double(amount));
     	}
-    	thelogger.logTransaction("deposit", playerName, amount, reason, "N/A");
+    	
+    	// To the logger!
+    	if (pluginSettings.logEvents.contains("gain")) {
+    		thelogger.logTransaction(EventType.GAIN, playerName, amount, reason, plugin.getDescription().getName());
+    	}
     }
     
     // Remove a user's points
-    protected void hRemovePoints(String playerName, double amount, String reason) {
+    protected void removePoints(String playerName, double amount, String reason, Plugin plugin) {
     	if (playerPoints.containsKey(playerName)) {
     		playerPoints.put(playerName, new Double(playerPoints.get(playerName).doubleValue() - amount));
+    	}
+    	
+    	// To the logger!
+    	if (pluginSettings.logEvents.contains("gain")) {
+    		thelogger.logTransaction(EventType.LOSS, playerName, amount, reason, plugin.getDescription().getName());
     	}
     }
     
     // Output a user's number of points
-    protected double hCheckPoints(String playerName) {
+    protected double checkPoints(String playerName, Plugin plugin) {
+    	// To the logger!
+    	if (pluginSettings.logEvents.contains("check")) {
+    		thelogger.logCheck(EventType.CHECK, playerName, plugin.getDescription().getName());
+    	}
+    	
     	return playerPoints.get(playerName).doubleValue();
     }
     
     // Create a user account
-    protected void hMakeAccount(String playerName) {
+    protected void makeAccount(String playerName, Plugin plugin) {
     	playerPoints.put(playerName, (double)0);
+    	
+    	// To the logger!
+    	if (pluginSettings.logEvents.contains("newaccount")) {
+    		thelogger.logCheck(EventType.NEWACCOUNT, playerName, plugin.getDescription().getName());
+    	}
     }
     
     // Check if player has an account
-    protected boolean hHasAccount(String playerName) {
+    protected boolean hasAccount(String playerName) {
     	return playerPoints.containsKey(playerName);
     }
-    
-    
-    // Developer API Functions and Methods (API)
-    
-    /**
-	 * Give points to a player
-	 * @param playerName The player receiving the points
-	 * @param amount How many points
-	 * @param reason Why he's getting the points
-	 */
-	public void addPoints(String playerName, double amount, String reason) {
-		hAddPoints(playerName, amount, reason);
-	}
-	
-	/**
-	 * Remove points from a player
-	 * @param playerName The player losing the points
-	 * @param amount How many points
-	 * @param reason Why he's losing the points
-	 */
-	public void removePoints(String playerName, double amount, String reason) {
-		hRemovePoints(playerName, amount, reason);
-	}
-	
-	/**
-	 * Get how many points a player has
-	 * @param playerName The player we want to find about
-	 * @return How many points the player has
-	 */
-	public double getPoints(String playerName) {
-		return hCheckPoints(playerName);
-	}
 	
 }
 
