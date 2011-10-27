@@ -4,16 +4,46 @@ version: 0.1
 author: Devil Boy
 description: A command-based merit system.
 
+commands:
+   commandpoints:
+      description: CommandPoints main command!
+      usage: /<command>
+   cp:
+      description: Alternative to the "commandpoints" command.
+      usage: /<command>
+
 permissions:
     CommandPoints.*:
         default: op
         description: Gives access to all CommandPoints commands.
         children:
-            scs.create: true
-            scs.use: true
-    CommandPoints.setPoints:
+    CommandPoints.help:
+        default: true
+        description: Can run the help command.
+    CommandPoints.points:
+        default: true
+        description: Can check own number points.
+    CommandPoints.points.other:
         default: op
-        description: Can give/remove points from players.
-    CommandPoints.checkPoints:
+        description: Can check other users' number of points.
+    CommandPoints.give:
         default: op
-        description: Can check another user's points.
+        description: Can give users points.
+    CommandPoints.remove:
+        default: op
+        description: Can remove points from a player.
+    CommandPoints.set:
+        default: op
+        description: Can set a user to a certain amount of points.
+    CommandPoints.reset:
+        default: op
+        description: Can reset the CommandPoints database.
+    CommandPoints.give.all:
+        default: op
+        description: Can give all users points at the same time.
+    CommandPoints.remove.all:
+        default: op
+        description: Can remove points from all users at the same time.
+    CommandPoints.transfer:
+        default: true
+        description: Can transfer points to another user.

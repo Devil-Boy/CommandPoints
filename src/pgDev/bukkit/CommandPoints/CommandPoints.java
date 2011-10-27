@@ -11,8 +11,7 @@ import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event;
@@ -30,7 +29,9 @@ import com.nijikokun.bukkit.Permissions.Permissions;
  * @author PG Dev Team (Devil Boy, Tux2)
  */
 public class CommandPoints extends JavaPlugin {
+	// Listeners
     private final CommandPointsPlayerListener playerListener = new CommandPointsPlayerListener(this);
+    private final CommandListener commandListener = new CommandListener(this);
     
     // Permissions Integration
     private static PermissionHandler Permissions;
@@ -41,7 +42,8 @@ public class CommandPoints extends JavaPlugin {
     // File Locations
     String pluginMainDir = "./plugins/CommandPoints";
     String pluginConfigLocation = pluginMainDir + "/CommandPoints.cfg";
-    String pointsDBLocation = pluginMainDir + "/playerPointsDB.dat";
+    String pointsDBLocation = pluginMainDir + "/PlayerPointsDB.ini";
+    String pointEventLogLocation = pluginMainDir + "/PointEventLog.txt";
     
     // Abstract Logger and Enums
     protected TransLogger thelogger;
@@ -96,6 +98,17 @@ public class CommandPoints extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
         
+        // Send commands to the executor
+        PluginCommand fullCommand = this.getCommand("commandpoints");
+        fullCommand.setExecutor(commandListener);
+        try {
+	        PluginCommand shortCommand = this.getCommand("cp");
+	        shortCommand.setExecutor(commandListener);
+	        //((PluginCommand)this.getCommand("cp")).setExecutor(commandListener); Made this line for fun, probably shouldn't be used though.
+        }catch (NullPointerException e) {
+        	System.out.println("CommandPoints: Another plugin is using /cp, please use /commandpoints");
+        }
+        
         // Permissions turn on!
     	setupPermissions();
 
@@ -121,7 +134,7 @@ public class CommandPoints extends JavaPlugin {
         }
     }
     
-    protected static boolean hasPermissions(Player player, String node) {
+    protected boolean hasPermissions(Player player, String node) {
         if (Permissions != null) {
         	return Permissions.has(player, node);
         } else {
@@ -193,20 +206,8 @@ public class CommandPoints extends JavaPlugin {
 		}
 		
 	}
-	
-	
-	// Command Listener
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		// TODO: Put console runnable commands here
-		if (cmd.getName().equals("database")) {
-			
-		} else if (cmd.getName().equalsIgnoreCase("give")) {
-			
-		}
-		// I'll finish this all later...
-		return false;
-	}
     
+	
     
     // Database Interaction Methods/Functions (Hooks)
     
