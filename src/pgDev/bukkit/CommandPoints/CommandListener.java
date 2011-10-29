@@ -50,16 +50,43 @@ public class CommandListener implements CommandExecutor {
 	    				player.sendMessage(ChatColor.RED + "You do not have the permissions to run the help command.");
 	    			}
 				} else { // Console Help
-					sender.sendMessage(ChatColor.GREEN + "/" + label + " points <username> - Tells you the amount of points a player has");
-					sender.sendMessage(ChatColor.GREEN + "/" + label + " give <username> <quantity> - Gives a user a specified number of points");
-					sender.sendMessage(ChatColor.GREEN + "/" + label + " remove <username> <quantity> - Removes a specified number of points from a user");
-					sender.sendMessage(ChatColor.GREEN + "/" + label + " set <username> <quantity> - Sets a user to the specified number of points.");
-					sender.sendMessage(ChatColor.GREEN + "/" + label + " reset - Clears the CommandPoints database");
-					sender.sendMessage(ChatColor.GREEN + "/" + label + " <quantity> - Gives all users a certain amount of points.");
-					sender.sendMessage(ChatColor.GREEN + "/" + label + " <quantity> - Removes a specified amount of points from all users");
+					sender.sendMessage("===== CommandPoints Console Commands =====");
+					sender.sendMessage("/" + label + " points <username> - Tells you the amount of points a player has");
+					sender.sendMessage("/" + label + " give <username> <quantity> - Gives a user a specified number of points");
+					sender.sendMessage("/" + label + " remove <username> <quantity> - Removes a specified number of points from a user");
+					sender.sendMessage("/" + label + " set <username> <quantity> - Sets a user to the specified number of points.");
+					sender.sendMessage("/" + label + " reset - Clears the CommandPoints database");
+					sender.sendMessage("/" + label + " <quantity> - Gives all users a certain amount of points.");
+					sender.sendMessage("/" + label + " <quantity> - Removes a specified amount of points from all users");
 				}
 			} else if (args[0].equalsIgnoreCase("points")) { // Tell Point Amounts
-				
+				if (args.length == 1) { // No playername
+					if (sender instanceof Player) { // Own points
+		    			Player player = (Player)sender;
+		    			if(plugin.hasPermissions(player, "CommandPoints.points")){
+		    				player.sendMessage(ChatColor.GOLD + "You have " + plugin.checkPoints(player.getName(), plugin) + " points.");
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to check your own number of points.");
+		    			}
+					} else {
+						sender.sendMessage("You did not specify a player.");
+					}
+				} else if (args.length > 1) { // Player specified
+					if (sender instanceof Player) {
+		    			Player player = (Player)sender;
+		    			if(plugin.hasPermissions(player, "CommandPoints.points.other")){
+		    				if (plugin.hasAccount(args[1])) {
+		    					player.sendMessage(ChatColor.GOLD + args[1] + " has " + plugin.checkPoints(args[1], plugin) + " points.");
+		    				} else {
+		    					player.sendMessage(ChatColor.RED + "The player you specified does not exist in the database.");
+		    				}
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to check your own number of points.");
+		    			}
+					} else {
+						sender.sendMessage(args[1] + " has " + plugin.checkPoints(args[1], plugin) + " points.");
+					}
+				}
 			} else if (args[0].equalsIgnoreCase("give")) { // Give Points
 				
 			} else if (args[0].equalsIgnoreCase("remove")) { // Remove Points
