@@ -144,7 +144,61 @@ public class CommandListener implements CommandExecutor {
 					}
 				}
 			} else if (args[0].equalsIgnoreCase("remove")) { // Remove Points
-				
+				if (args.length == 1) { // Usage dialog
+					if (sender instanceof Player) { // Player Output
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <player> <amount> <reason>");
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to remove points.");
+		    			}
+					} else { // Console Output
+						sender.sendMessage("Usage: /" + label + " <player> <amount> <reason>");
+					}
+				} else if (args.length == 2) { // No Quantity or Reason
+					if (sender instanceof Player) { // Player Output
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <amount> <reason>");
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to remove points.");
+		    			}
+					} else { // Console Output
+						sender.sendMessage("Usage: /" + label + args[0] + args[1] + " <amount> <reason>");
+					}
+				} else if (args.length == 3) { // No Reason
+					if (sender instanceof Player) { // Player Output
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + args[2] +" <reason>");
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to remove points.");
+		    			}
+					} else { // Console Output
+						sender.sendMessage("Usage: /" + label + args[0] + args[1] + args[2] +" <reason>");
+					}
+				} else if (args.length > 3) { // Correctly Formatted Query
+					if (sender instanceof Player) { // Player Output
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
+		    				try {
+		    					plugin.removePoints(args[1], Double.parseDouble(args[2]), remainingWords(args, 3), plugin);
+		    					player.sendMessage(ChatColor.GOLD + "You gave removed " + args[2] + " points from " + args[1] + "'s account.");
+		    				} catch (NumberFormatException e) {
+		    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
+		    				}
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to remove points.");
+		    			}
+					} else { // Console Output
+						try {
+	    					plugin.removePoints(args[1], Double.parseDouble(args[2]), remainingWords(args, 3), plugin);
+	    					sender.sendMessage("You gave removed " + args[2] + " points from " + args[1] + "'s account.");
+	    				} catch (NumberFormatException e) {
+	    					sender.sendMessage("The amount you specified was invalid.");
+	    				}
+					}
+				}
 			} else if (args[0].equalsIgnoreCase("set")) { // Set Points
 				
 			} else if (args[0].equalsIgnoreCase("reset")) { // Reset Points
