@@ -258,9 +258,95 @@ public class CommandListener implements CommandExecutor {
 					sender.sendMessage("Points database reset!");
 				}
 			} else if (args[0].equalsIgnoreCase("giveall")) { // Give Everyone Points
-				
+				if (args.length == 1) { // Usage dialog
+					if (sender instanceof Player) {
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <amount> <reason>");
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
+		    			}
+					} else {
+						sender.sendMessage("Usage: /" + label + args[0] + " <amount> <reason>");
+					}
+				} else if (args.length == 2) { // Missing reason
+					if (sender instanceof Player) {
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <reason>");
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
+		    			}
+					} else {
+						sender.sendMessage("Usage: /" + label + args[0] + args[1] + " <reason>");
+					}
+				} else if (args.length > 2) { // Correctly formatted query
+					if (sender instanceof Player) { // Player output
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
+		    				try {
+		    					plugin.addPointsAll(Double.parseDouble(args[1]), remainingWords(args, 2), plugin);
+		    					player.sendMessage(ChatColor.GOLD + "You have given everyone " + args[1] + " points.");
+		    				} catch (NumberFormatException e) {
+		    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
+		    				}
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
+		    			}
+					} else { // Console output
+						try {
+	    					plugin.addPointsAll(Double.parseDouble(args[1]), remainingWords(args, 2), plugin);
+	    					sender.sendMessage("You have given everyone " + args[1] + " points.");
+	    				} catch (NumberFormatException e) {
+	    					sender.sendMessage("The amount you specified was invalid.");
+	    				}
+					}
+				}
 			} else if (args[0].equalsIgnoreCase("removeall")) { // Remove Points from Everyone
-				
+				if (args.length == 1) { // Usage dialog
+					if (sender instanceof Player) {
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) {
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <amount> <reason>");
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
+		    			}
+					} else {
+						sender.sendMessage("Usage: /" + label + args[0] + " <amount> <reason>");
+					}
+				} else if (args.length == 2) { // Missing reason
+					if (sender instanceof Player) {
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) {
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <reason>");
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
+		    			}
+					} else {
+						sender.sendMessage("Usage: /" + label + args[0] + args[1] + " <reason>");
+					}
+				} else if (args.length > 2) { // Correctly formatted query
+					if (sender instanceof Player) { // Player output
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) {
+		    				try {
+		    					plugin.removePointsAll(Double.parseDouble(args[1]), remainingWords(args, 2), plugin);
+		    					player.sendMessage(ChatColor.GOLD + "You have taken " + args[1] + " points from everyone.");
+		    				} catch (NumberFormatException e) {
+		    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
+		    				}
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
+		    			}
+					} else { // Console output
+						try {
+	    					plugin.removePointsAll(Double.parseDouble(args[1]), remainingWords(args, 2), plugin);
+	    					sender.sendMessage("You have taken " + args[1] + " points from everyone.");
+	    				} catch (NumberFormatException e) {
+	    					sender.sendMessage("The amount you specified was invalid.");
+	    				}
+					}
+				}
 			} else if (args[0].equalsIgnoreCase("transfer")) { // Transfer Points
 				
 			}

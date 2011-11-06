@@ -230,6 +230,14 @@ public class CommandPoints extends JavaPlugin {
     	}
     }
     
+    // Give all users points
+    protected void addPointsAll(double amount, String reason, Plugin plugin) {
+    	Set<String> players = playerPoints.keySet();
+    	for (String player : players) {
+    		addPoints(player, amount, reason, plugin);
+    	}
+    }
+    
     // Remove a user's points
     protected void removePoints(String playerName, double amount, String reason, Plugin plugin) {
     	if (playerPoints.containsKey(playerName)) {
@@ -247,7 +255,15 @@ public class CommandPoints extends JavaPlugin {
     	}
     }
     
- // Set a user's points
+    // Remove points from all users
+    protected void removePointsAll(double amount, String reason, Plugin plugin) {
+    	Set<String> players = playerPoints.keySet();
+    	for (String player : players) {
+    		removePoints(player, amount, reason, plugin);
+    	}
+    }
+    
+    // Set a user's points
     protected void setPoints(String playerName, double amount, Plugin plugin) {
     	if (playerPoints.containsKey(playerName)) {
     		playerPoints.put(playerName, amount);
