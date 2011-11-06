@@ -238,6 +238,12 @@ public class CommandPoints extends JavaPlugin {
     	}
     }
     
+    // Transfer points
+    protected void transferPoints(String giver, String receiver, double amount, String reason, Plugin plugin) {
+    	removePoints(giver, amount, reason, plugin);
+    	addPoints(receiver, amount, reason, plugin);
+    }
+    
     // Remove a user's points
     protected void removePoints(String playerName, double amount, String reason, Plugin plugin) {
     	if (playerPoints.containsKey(playerName)) {
@@ -288,6 +294,15 @@ public class CommandPoints extends JavaPlugin {
     	}
     	
     	return playerPoints.get(playerName).doubleValue();
+    }
+    
+    // Check if the user's account contains at least a certain number of points
+    protected boolean hasPoints(String playerName, double amount) {
+    	if (playerPoints.get(playerName).doubleValue() >= amount) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
     
     // Create a user account

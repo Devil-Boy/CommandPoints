@@ -347,8 +347,38 @@ public class CommandListener implements CommandExecutor {
 	    				}
 					}
 				}
-			} else if (args[0].equalsIgnoreCase("transfer")) { // Transfer Points
-				
+			} else if (args[0].equalsIgnoreCase("transfer")) { // Transfer Points (0=transfer, 1=otherplayer, 2=amount, 3+=reason)
+				if (sender instanceof Player) {
+	    			Player player = (Player)sender;
+	    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) { // Can transfer
+	    				if (args.length == 1) { // Usage dialog
+	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <player> <amount> <reason>");
+	    				} else if (args.length == 2) { // Missing amount and reason
+	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <amount> <reason>");
+	    				} else if (args.length == 3) { // Missing reason
+	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + args[2] + " <reason>");
+	    				} else if (args.length > 3) { // Correctly formatted query
+	    					if (plugin.hasAccount(args[1])) { // Check if recipient exists
+	    						try {
+	    							if (plugin.hasPoints(player.getName(), Double.parseDouble(args[2]))) { // Check if giver has enough points
+	    								plugin.transferPoints(player.getName(), args[1], Double.parseDouble(args[2]), remainingWords(args, 3), plugin);
+				    					player.sendMessage(ChatColor.GOLD + "You have given " + args[2] + " points to " + args[1]);
+	    							} else {
+	    								player.sendMessage(ChatColor.RED + "You do not have " + args[2] + " points to give.");
+	    							}
+			    				} catch (NumberFormatException e) {
+			    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
+			    				}
+	    					} else {
+	    						player.sendMessage(ChatColor.RED + "The player you specified does not have an account.");
+	    					}
+	    				}
+	    			} else {
+	    				player.sendMessage(ChatColor.RED + "You do not have the permission to transfer your points.");
+	    			}
+				} else {
+					sender.sendMessage("This command must be run by a player while in game.");
+				}
 			}
 		}
 		return false;
