@@ -49,7 +49,7 @@ public class CommandPoints extends JavaPlugin {
     protected TransLogger thelogger;
     
     public enum EventType {
-    	GAIN, LOSS, CHECK, NEWACCOUNT
+    	GAIN, LOSS, CHECK, NEWACCOUNT, POINTSET
     }
     
     // Plugin Configuration
@@ -260,7 +260,7 @@ public class CommandPoints extends JavaPlugin {
     	
     	// To the logger!
     	if (pluginSettings.logEvents.contains("set")) {
-    		thelogger.logPointSet(EventType.LOSS, playerName, amount, plugin.getDescription().getName());
+    		thelogger.logPointSet(EventType.POINTSET, playerName, amount, plugin.getDescription().getName());
     	}
     }
     

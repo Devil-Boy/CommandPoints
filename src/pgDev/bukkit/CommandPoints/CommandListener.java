@@ -200,7 +200,50 @@ public class CommandListener implements CommandExecutor {
 					}
 				}
 			} else if (args[0].equalsIgnoreCase("set")) { // Set Points
-				
+				if (args.length == 1) { // Usage dialog
+					if (sender instanceof Player) { // Player Output
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.set")) {
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <player> <amount>");
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to set points.");
+		    			}
+					} else { // Console Output
+						sender.sendMessage("Usage: /" + label + " <player> <amount>");
+					}
+				} else if (args.length == 2) { // No amount given
+					if (sender instanceof Player) { // Player Output
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.set")) {
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <amount>");
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to set points.");
+		    			}
+					} else { // Console Output
+						sender.sendMessage("Usage: /" + label + args[0] + args[1] + " <amount>");
+					}
+				} else if (args.length > 2) { // Correctly formatted query
+					if (sender instanceof Player) { // Player Output
+		    			Player player = (Player)sender;
+		    			if (plugin.hasPermissions(player, "CommandPoints.set")) {
+		    				try {
+		    					plugin.setPoints(args[1], Double.parseDouble(args[2]), plugin);
+		    					player.sendMessage(ChatColor.GOLD + "You have set " + args[1] + "'s account to " + args[2] + " points.");
+		    				} catch (NumberFormatException e) {
+		    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
+		    				}
+		    			} else {
+		    				player.sendMessage(ChatColor.RED + "You do not have the permission to set points.");
+		    			}
+					} else { // Console Output
+						try {
+							plugin.setPoints(args[1], Double.parseDouble(args[2]), plugin);
+	    					sender.sendMessage("You have set " + args[1] + "'s account to " + args[2] + " points.");
+	    				} catch (NumberFormatException e) {
+	    					sender.sendMessage("The amount you specified was invalid.");
+	    				}
+					}
+				}
 			} else if (args[0].equalsIgnoreCase("reset")) { // Reset Points
 				if (sender instanceof Player) {
 	    			Player player = (Player)sender;
