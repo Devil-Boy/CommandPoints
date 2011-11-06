@@ -202,7 +202,18 @@ public class CommandListener implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("set")) { // Set Points
 				
 			} else if (args[0].equalsIgnoreCase("reset")) { // Reset Points
-				
+				if (sender instanceof Player) {
+	    			Player player = (Player)sender;
+	    			if (plugin.hasPermissions(player, "CommandPoints.reset")) {
+	    				plugin.clearPoints();
+	    				player.sendMessage(ChatColor.GOLD + "Points database reset!");
+	    			} else {
+	    				player.sendMessage(ChatColor.RED + "You do not have the permission to reset the points database.");
+	    			}
+				} else {
+					plugin.clearPoints();
+					sender.sendMessage("Points database reset!");
+				}
 			} else if (args[0].equalsIgnoreCase("giveall")) { // Give Everyone Points
 				
 			} else if (args[0].equalsIgnoreCase("removeall")) { // Remove Points from Everyone

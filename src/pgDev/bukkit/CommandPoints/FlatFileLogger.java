@@ -28,4 +28,11 @@ public class FlatFileLogger extends TransLogger {
 		
 	}
 
+	@Override
+	public void logPointSet(EventType type, String player, double amount,
+			String plugin) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

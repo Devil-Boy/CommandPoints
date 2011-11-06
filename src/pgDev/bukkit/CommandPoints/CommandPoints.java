@@ -219,6 +219,11 @@ public class CommandPoints extends JavaPlugin {
     		playerPoints.put(playerName, new Double(amount));
     	}
     	
+    	// Save database
+    	if (!pluginSettings.reduceOverhead) {
+    		savePointsDatabase();
+    	}
+    	
     	// To the logger!
     	if (pluginSettings.logEvents.contains("gain")) {
     		thelogger.logTransaction(EventType.GAIN, playerName, amount, reason, plugin.getDescription().getName());
@@ -231,9 +236,31 @@ public class CommandPoints extends JavaPlugin {
     		playerPoints.put(playerName, new Double(playerPoints.get(playerName).doubleValue() - amount));
     	}
     	
+    	// Save database
+    	if (!pluginSettings.reduceOverhead) {
+    		savePointsDatabase();
+    	}
+    	
     	// To the logger!
     	if (pluginSettings.logEvents.contains("gain")) {
     		thelogger.logTransaction(EventType.LOSS, playerName, amount, reason, plugin.getDescription().getName());
+    	}
+    }
+    
+ // Set a user's points
+    protected void setPoints(String playerName, double amount, Plugin plugin) {
+    	if (playerPoints.containsKey(playerName)) {
+    		playerPoints.put(playerName, amount);
+    	}
+    	
+    	// Save database
+    	if (!pluginSettings.reduceOverhead) {
+    		savePointsDatabase();
+    	}
+    	
+    	// To the logger!
+    	if (pluginSettings.logEvents.contains("set")) {
+    		thelogger.logPointSet(EventType.LOSS, playerName, amount, plugin.getDescription().getName());
     	}
     }
     
@@ -251,6 +278,11 @@ public class CommandPoints extends JavaPlugin {
     protected void makeAccount(String playerName, Plugin plugin) {
     	playerPoints.put(playerName, (double)0);
     	
+    	// Save database
+    	if (!pluginSettings.reduceOverhead) {
+    		savePointsDatabase();
+    	}
+    	
     	// To the logger!
     	if (pluginSettings.logEvents.contains("newaccount")) {
     		thelogger.logCheck(EventType.NEWACCOUNT, playerName, plugin.getDescription().getName());
@@ -260,6 +292,19 @@ public class CommandPoints extends JavaPlugin {
     // Check if player has an account
     protected boolean hasAccount(String playerName) {
     	return playerPoints.containsKey(playerName);
+    }
+    
+    // Clear all points
+    protected void clearPoints() {
+    	playerPoints.clear();
+    	
+    	// Save database
+    	if (!pluginSettings.reduceOverhead) {
+    		savePointsDatabase();
+    	}
+    	
+    	// To the logger!
+    	thelogger.logMisc("Points database cleared!");
     }
 	
 }

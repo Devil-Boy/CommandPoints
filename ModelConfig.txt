@@ -19,3 +19,10 @@ gainlossConsoleOutput=false
 #		check - Whenever a player checks his points
 #		newaccount - Whenever a new account is made
 logEvents=gain loss
+
+# Reduce overhead
+#	With this set as true, the points database will
+#	only be saved on a clean server stop. This is not
+#	recommended and should only be used by those
+#	who understand its consequences.
+reduceOverhead=false

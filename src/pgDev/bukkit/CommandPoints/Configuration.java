@@ -24,6 +24,7 @@ public class Configuration {
 	// List of Config Options
 	boolean gainlossConsoleOutput;
 	String logEvents;
+	boolean reduceOverhead;
 	
 	public Configuration(Properties p, final CommandPoints plugin) {
         properties = p;
@@ -32,6 +33,7 @@ public class Configuration {
         // Grab values here.
         gainlossConsoleOutput = getBoolean("gainlossConsoleOutput", false);
         logEvents = getString("logEvents", "gain loss");
+        reduceOverhead = getBoolean("reduceOverhead", false);
 	}
 	
 	// Value obtaining functions down below
@@ -167,6 +169,13 @@ public class Configuration {
     		out.write("#		check - Whenever a player checks his points\r\n");
     		out.write("#		newaccount - Whenever a new account is made\r\n");
     		out.write("logEvents=" + logEvents + "\r\n");
+    		out.write("\r\n");
+    		out.write("# Reduce overhead\r\n");
+    		out.write("#	With this set as true, the points database will\r\n");
+    		out.write("#	only be saved on a clean server stop. This is not\r\n");
+    		out.write("#	recommended and should only be used by those\r\n");
+    		out.write("#	who understand its consequences.\r\n");
+    		out.write("reduceOverhead=" + reduceOverhead + "\r\n");
     		out.close();
     	} catch (Exception e) {
     		System.out.println(e);
