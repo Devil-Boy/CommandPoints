@@ -26,6 +26,8 @@ private CommandPointsAPI getCommandPointsAPI() {
     
     if (commandPoints != null) {
         return ((CommandPoints)commandPoints).getAPI();
+    } else {
+    	return null;
     }
 }
 
