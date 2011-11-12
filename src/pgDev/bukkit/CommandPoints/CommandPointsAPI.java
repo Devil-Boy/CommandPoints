@@ -29,7 +29,7 @@ public class CommandPointsAPI {
 	 * @param amount How many points
 	 * @param reason Why he's getting the points
 	 */
-	public void addPoints(String playerName, double amount, String reason, Plugin plugin) {
+	public void addPoints(String playerName, int amount, String reason, Plugin plugin) {
 		cp.addPoints(playerName, amount, reason, plugin);
 	}
 	
@@ -39,8 +39,33 @@ public class CommandPointsAPI {
 	 * @param amount How many points
 	 * @param reason Why he's losing the points
 	 */
-	public void removePoints(String playerName, double amount, String reason, Plugin plugin) {
+	public void removePoints(String playerName, int amount, String reason, Plugin plugin) {
 		cp.removePoints(playerName, amount, reason, plugin);
+		
+		// Check for negative points
+		if (cp.playerPoints.get(playerName.toLowerCase()) < 0) {
+			cp.setPoints(playerName, 0, plugin);
+		}
+	}
+	
+	/**
+	 * Remove points from a player without checking if their number of points goes below zero
+	 * @param playerName The player losing the points
+	 * @param amount How many points
+	 * @param reason Why he's losing the points
+	 */
+	@Deprecated
+	public void removePointsNoCheck(String playerName, int amount, String reason, Plugin plugin) {
+		cp.removePoints(playerName, amount, reason, plugin);
+	}
+	
+	/**
+	 * Set the amount of points a player has
+	 * @param playerName The player getting his points set
+	 * @param amount How many points
+	 */
+	public void setPoints(String playerName, int amount, Plugin plugin) {
+		cp.setPoints(playerName, amount, plugin);
 	}
 	
 	/**
@@ -48,8 +73,27 @@ public class CommandPointsAPI {
 	 * @param playerName The player we want to find about
 	 * @return How many points the player has
 	 */
-	public double getPoints(String playerName, Plugin plugin) {
+	public int getPoints(String playerName, Plugin plugin) {
 		return cp.checkPoints(playerName, plugin);
+	}
+	
+	/**
+	 * Check if the given player has an account
+	 * @param playerName The player we want to find about
+	 * @return Whether or not the player has an account
+	 */
+	public boolean hasAccount(String playerName, Plugin plugin) {
+		return cp.hasAccount(playerName);
+	}
+	
+	/**
+	 * Check if the given player has at least the given amount of points
+	 * @param playerName The player we want to find about
+	 * @param amount The amount of points we're checking for
+	 * @return Whether or not the player has at least that many points
+	 */
+	public boolean hasPoints(String playerName, int amount, Plugin plugin) {
+		return cp.hasPoints(playerName, amount);
 	}
 
 }

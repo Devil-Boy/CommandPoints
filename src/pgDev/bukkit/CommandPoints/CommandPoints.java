@@ -37,7 +37,7 @@ public class CommandPoints extends JavaPlugin {
     private static PermissionHandler Permissions;
     
     // Player Points Database
-    private HashMap<String, Double> playerPoints = new HashMap<String, Double>();
+    protected HashMap<String, Integer> playerPoints = new HashMap<String, Integer>();
 
     // File Locations
     String pluginMainDir = "./plugins/CommandPoints";
@@ -172,7 +172,7 @@ public class CommandPoints extends JavaPlugin {
 				while(iprices.hasNext()) {
 					Entry<Object, Object> price = iprices.next();
 					try {
-						playerPoints.put(price.getKey().toString().toLowerCase(), new Double(price.getValue().toString()));
+						playerPoints.put(price.getKey().toString().toLowerCase(), new Integer(price.getValue().toString()));
 					}catch (NumberFormatException ex) {
 						System.out.println("[CommandPoints] Unable to parse the value for player " + price.getKey().toString());
 					}
@@ -196,8 +196,8 @@ public class CommandPoints extends JavaPlugin {
 					"# this file should not be edited directly. Change their amounts in game.\n" +
 					"\n" +
 					"\n");
-			 Set<Entry<String, Double>> ppoints = playerPoints.entrySet();
-			for(Entry<String, Double> tpoints : ppoints) {
+			 Set<Entry<String, Integer>> ppoints = playerPoints.entrySet();
+			for(Entry<String, Integer> tpoints : ppoints) {
 				outChannel.write(tpoints.getKey().toString() + " = " + String.valueOf(tpoints.getValue()) + "\n");
 			}
 			outChannel.close();
@@ -212,11 +212,11 @@ public class CommandPoints extends JavaPlugin {
     // Database Interaction Methods/Functions (Hooks)
     
     // Give a user points
-    protected void addPoints(String playerName, double amount, String reason, Plugin plugin) {
+    protected void addPoints(String playerName, int amount, String reason, Plugin plugin) {
     	if (playerPoints.containsKey(playerName.toLowerCase())) {
-    		playerPoints.put(playerName.toLowerCase(), new Double(playerPoints.get(playerName.toLowerCase()).doubleValue() + amount));
+    		playerPoints.put(playerName.toLowerCase(), playerPoints.get(playerName.toLowerCase()) + amount);
     	} else {
-    		playerPoints.put(playerName.toLowerCase(), new Double(amount));
+    		playerPoints.put(playerName.toLowerCase(), amount);
     	}
     	
     	// Save database
@@ -231,7 +231,7 @@ public class CommandPoints extends JavaPlugin {
     }
     
     // Give all users points
-    protected void addPointsAll(double amount, String reason, Plugin plugin) {
+    protected void addPointsAll(int amount, String reason, Plugin plugin) {
     	Set<String> players = playerPoints.keySet();
     	for (String player : players) {
     		addPoints(player, amount, reason, plugin);
@@ -239,15 +239,15 @@ public class CommandPoints extends JavaPlugin {
     }
     
     // Transfer points
-    protected void transferPoints(String giver, String receiver, double amount, String reason, Plugin plugin) {
+    protected void transferPoints(String giver, String receiver, int amount, String reason, Plugin plugin) {
     	removePoints(giver, amount, reason, plugin);
     	addPoints(receiver, amount, reason, plugin);
     }
     
     // Remove a user's points
-    protected void removePoints(String playerName, double amount, String reason, Plugin plugin) {
+    protected void removePoints(String playerName, int amount, String reason, Plugin plugin) {
     	if (playerPoints.containsKey(playerName.toLowerCase())) {
-    		playerPoints.put(playerName.toLowerCase(), new Double(playerPoints.get(playerName.toLowerCase()).doubleValue() - amount));
+    		playerPoints.put(playerName.toLowerCase(), playerPoints.get(playerName.toLowerCase()) - amount);
     	}
     	
     	// Save database
@@ -262,7 +262,7 @@ public class CommandPoints extends JavaPlugin {
     }
     
     // Remove points from all users
-    protected void removePointsAll(double amount, String reason, Plugin plugin) {
+    protected void removePointsAll(int amount, String reason, Plugin plugin) {
     	Set<String> players = playerPoints.keySet();
     	for (String player : players) {
     		removePoints(player, amount, reason, plugin);
@@ -270,7 +270,7 @@ public class CommandPoints extends JavaPlugin {
     }
     
     // Set a user's points
-    protected void setPoints(String playerName, double amount, Plugin plugin) {
+    protected void setPoints(String playerName, int amount, Plugin plugin) {
     	if (playerPoints.containsKey(playerName.toLowerCase())) {
     		playerPoints.put(playerName.toLowerCase(), amount);
     	}
@@ -287,18 +287,18 @@ public class CommandPoints extends JavaPlugin {
     }
     
     // Output a user's number of points
-    protected double checkPoints(String playerName, Plugin plugin) {
+    protected int checkPoints(String playerName, Plugin plugin) {
     	// To the logger!
     	if (pluginSettings.logEvents.contains("check")) {
     		thelogger.logCheck(EventType.CHECK, playerName, plugin.getDescription().getName());
     	}
     	
-    	return playerPoints.get(playerName.toLowerCase()).doubleValue();
+    	return playerPoints.get(playerName.toLowerCase());
     }
     
     // Check if the user's account contains at least a certain number of points
-    protected boolean hasPoints(String playerName, double amount) {
-    	if (playerPoints.get(playerName).doubleValue() >= amount) {
+    protected boolean hasPoints(String playerName, int amount) {
+    	if (playerPoints.get(playerName) >= amount) {
     		return true;
     	} else {
     		return false;
@@ -307,7 +307,7 @@ public class CommandPoints extends JavaPlugin {
     
     // Create a user account
     protected void makeAccount(String playerName, Plugin plugin) {
-    	playerPoints.put(playerName.toLowerCase(), (double)0);
+    	playerPoints.put(playerName.toLowerCase(), 0);
     	
     	// Save database
     	if (!pluginSettings.reduceOverhead) {

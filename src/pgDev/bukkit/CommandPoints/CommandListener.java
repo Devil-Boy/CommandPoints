@@ -127,7 +127,7 @@ public class CommandListener implements CommandExecutor {
 		    			if (plugin.hasPermissions(player, "CommandPoints.give")) {
 		    				if (plugin.hasAccount(args[1])) { // Check if recipient exists
 		    					try {
-			    					plugin.addPoints(args[1], Double.parseDouble(args[2]), remainingWords(args, 3), plugin);
+			    					plugin.addPoints(args[1], Integer.parseInt(args[2]), remainingWords(args, 3), plugin);
 			    					player.sendMessage(ChatColor.GOLD + "You gave " + args[1] + " " + args[2] + " points.");
 			    				} catch (NumberFormatException e) {
 			    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
@@ -141,7 +141,7 @@ public class CommandListener implements CommandExecutor {
 					} else { // Console Output
 						if (plugin.hasAccount(args[1])) { // Check if recipient exists
 							try {
-		    					plugin.addPoints(args[1], Double.parseDouble(args[2]), remainingWords(args, 3), plugin);
+		    					plugin.addPoints(args[1], Integer.parseInt(args[2]), remainingWords(args, 3), plugin);
 		    					sender.sendMessage("You gave " + args[1] + " " + args[2] + " points.");
 		    				} catch (NumberFormatException e) {
 		    					sender.sendMessage("The amount you specified was invalid.");
@@ -191,7 +191,7 @@ public class CommandListener implements CommandExecutor {
 		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
 		    				if (plugin.hasAccount(args[1])) { // Does the player exist?
 		    					try {
-			    					plugin.removePoints(args[1], Double.parseDouble(args[2]), remainingWords(args, 3), plugin);
+			    					plugin.removePoints(args[1], Integer.parseInt(args[2]), remainingWords(args, 3), plugin);
 			    					player.sendMessage(ChatColor.GOLD + "You gave removed " + args[2] + " points from " + args[1] + "'s account.");
 			    				} catch (NumberFormatException e) {
 			    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
@@ -205,7 +205,7 @@ public class CommandListener implements CommandExecutor {
 					} else { // Console Output
 						if (plugin.hasAccount(args[1])) { // Does the player exist?
 							try {
-		    					plugin.removePoints(args[1], Double.parseDouble(args[2]), remainingWords(args, 3), plugin);
+		    					plugin.removePoints(args[1], Integer.parseInt(args[2]), remainingWords(args, 3), plugin);
 		    					sender.sendMessage("You gave removed " + args[2] + " points from " + args[1] + "'s account.");
 		    				} catch (NumberFormatException e) {
 		    					sender.sendMessage("The amount you specified was invalid.");
@@ -244,7 +244,7 @@ public class CommandListener implements CommandExecutor {
 		    			if (plugin.hasPermissions(player, "CommandPoints.set")) {
 		    				if (plugin.hasAccount(args[1])) { // Does the player exist?
 		    					try {
-			    					plugin.setPoints(args[1], Double.parseDouble(args[2]), plugin);
+			    					plugin.setPoints(args[1], Integer.parseInt(args[2]), plugin);
 			    					player.sendMessage(ChatColor.GOLD + "You have set " + args[1] + "'s account to " + args[2] + " points.");
 			    				} catch (NumberFormatException e) {
 			    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
@@ -258,7 +258,7 @@ public class CommandListener implements CommandExecutor {
 					} else { // Console Output
 						if (plugin.hasAccount(args[1])) { // Does the player exist?
 							try {
-								plugin.setPoints(args[1], Double.parseDouble(args[2]), plugin);
+								plugin.setPoints(args[1], Integer.parseInt(args[2]), plugin);
 		    					sender.sendMessage("You have set " + args[1] + "'s account to " + args[2] + " points.");
 		    				} catch (NumberFormatException e) {
 		    					sender.sendMessage("The amount you specified was invalid.");
@@ -309,7 +309,7 @@ public class CommandListener implements CommandExecutor {
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
 		    				try {
-		    					plugin.addPointsAll(Double.parseDouble(args[1]), remainingWords(args, 2), plugin);
+		    					plugin.addPointsAll(Integer.parseInt(args[1]), remainingWords(args, 2), plugin);
 		    					player.sendMessage(ChatColor.GOLD + "You have given everyone " + args[1] + " points.");
 		    				} catch (NumberFormatException e) {
 		    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
@@ -319,7 +319,7 @@ public class CommandListener implements CommandExecutor {
 		    			}
 					} else { // Console output
 						try {
-	    					plugin.addPointsAll(Double.parseDouble(args[1]), remainingWords(args, 2), plugin);
+	    					plugin.addPointsAll(Integer.parseInt(args[1]), remainingWords(args, 2), plugin);
 	    					sender.sendMessage("You have given everyone " + args[1] + " points.");
 	    				} catch (NumberFormatException e) {
 	    					sender.sendMessage("The amount you specified was invalid.");
@@ -354,7 +354,7 @@ public class CommandListener implements CommandExecutor {
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) {
 		    				try {
-		    					plugin.removePointsAll(Double.parseDouble(args[1]), remainingWords(args, 2), plugin);
+		    					plugin.removePointsAll(Integer.parseInt(args[1]), remainingWords(args, 2), plugin);
 		    					player.sendMessage(ChatColor.GOLD + "You have taken " + args[1] + " points from everyone.");
 		    				} catch (NumberFormatException e) {
 		    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
@@ -364,7 +364,7 @@ public class CommandListener implements CommandExecutor {
 		    			}
 					} else { // Console output
 						try {
-	    					plugin.removePointsAll(Double.parseDouble(args[1]), remainingWords(args, 2), plugin);
+	    					plugin.removePointsAll(Integer.parseInt(args[1]), remainingWords(args, 2), plugin);
 	    					sender.sendMessage("You have taken " + args[1] + " points from everyone.");
 	    				} catch (NumberFormatException e) {
 	    					sender.sendMessage("The amount you specified was invalid.");
@@ -384,8 +384,8 @@ public class CommandListener implements CommandExecutor {
 	    				} else if (args.length > 3) { // Correctly formatted query
 	    					if (plugin.hasAccount(args[1])) { // Check if recipient exists
 	    						try {
-	    							if (plugin.hasPoints(player.getName(), Double.parseDouble(args[2]))) { // Check if giver has enough points
-	    								plugin.transferPoints(player.getName(), args[1], Double.parseDouble(args[2]), remainingWords(args, 3), plugin);
+	    							if (plugin.hasPoints(player.getName(), Integer.parseInt(args[2]))) { // Check if giver has enough points
+	    								plugin.transferPoints(player.getName(), args[1], Integer.parseInt(args[2]), remainingWords(args, 3), plugin);
 				    					player.sendMessage(ChatColor.GOLD + "You have given " + args[2] + " points to " + args[1]);
 	    							} else {
 	    								player.sendMessage(ChatColor.RED + "You do not have " + args[2] + " points to give.");
