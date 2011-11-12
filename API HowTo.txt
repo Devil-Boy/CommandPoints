@@ -12,7 +12,7 @@ private void setupCommandPoints() {
     Plugin commandPoints = this.getServer().getPluginManager().getPlugin("CommandPoints");
     
     if (commandPoints != null) {
-        cpAPi = ((CommandPoints)commandPoints).getAPI(this);
+        cpAPI = ((CommandPoints)commandPoints).getAPI();
     }
 }
 
@@ -25,7 +25,7 @@ private CommandPointsAPI getCommandPointsAPI() {
     Plugin commandPoints = this.getServer().getPluginManager().getPlugin("CommandPoints");
     
     if (commandPoints != null) {
-        return ((CommandPoints)commandPoints).getAPI(this);
+        return ((CommandPoints)commandPoints).getAPI();
     }
 }
 
