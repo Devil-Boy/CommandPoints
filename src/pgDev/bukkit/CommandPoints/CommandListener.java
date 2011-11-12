@@ -103,23 +103,23 @@ public class CommandListener implements CommandExecutor {
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.give")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <amount> <reason>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give points.");
 		    			}
 					} else { // Console Output
-						sender.sendMessage("Usage: /" + label + args[0] + args[1] + " <amount> <reason>");
+						sender.sendMessage("Usage: /" + label + " " + args[0] + " " + args[1] + " <amount> <reason>");
 					}
 				} else if (args.length == 3) { // No Reason
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.give")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + args[2] +" <reason>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " " + args[2] + " <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give points.");
 		    			}
 					} else { // Console Output
-						sender.sendMessage("Usage: /" + label + args[0] + args[1] + args[2] +" <reason>");
+						sender.sendMessage("Usage: /" + label + " " + args[0] + " " + args[1] + " " + args[2] + " <reason>");
 					}
 				} else if (args.length > 3) { // Correctly Formatted Query
 					if (sender instanceof Player) { // Player Output
@@ -156,7 +156,7 @@ public class CommandListener implements CommandExecutor {
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <player> <amount> <reason>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <player> <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to remove points.");
 		    			}
@@ -167,23 +167,23 @@ public class CommandListener implements CommandExecutor {
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <amount> <reason>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to remove points.");
 		    			}
 					} else { // Console Output
-						sender.sendMessage("Usage: /" + label + args[0] + args[1] + " <amount> <reason>");
+						sender.sendMessage("Usage: /" + label + " " + args[0] + " " + args[1] + " <amount> <reason>");
 					}
 				} else if (args.length == 3) { // No Reason
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + args[2] +" <reason>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " " + args[2] + " <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to remove points.");
 		    			}
 					} else { // Console Output
-						sender.sendMessage("Usage: /" + label + args[0] + args[1] + args[2] +" <reason>");
+						sender.sendMessage("Usage: /" + label + " " + args[0] + " " + args[1] + " " + args[2] + " <reason>");
 					}
 				} else if (args.length > 3) { // Correctly Formatted Query
 					if (sender instanceof Player) { // Player Output
@@ -220,7 +220,7 @@ public class CommandListener implements CommandExecutor {
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.set")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <player> <amount>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <player> <amount>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to set points.");
 		    			}
@@ -231,12 +231,12 @@ public class CommandListener implements CommandExecutor {
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.set")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <amount>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <amount>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to set points.");
 		    			}
 					} else { // Console Output
-						sender.sendMessage("Usage: /" + label + args[0] + args[1] + " <amount>");
+						sender.sendMessage("Usage: /" + label + " " + args[0] + " " + args[1] + " <amount>");
 					}
 				} else if (args.length > 2) { // Correctly formatted query
 					if (sender instanceof Player) { // Player Output
@@ -286,23 +286,23 @@ public class CommandListener implements CommandExecutor {
 					if (sender instanceof Player) {
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <amount> <reason>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
 		    			}
 					} else {
-						sender.sendMessage("Usage: /" + label + args[0] + " <amount> <reason>");
+						sender.sendMessage("Usage: /" + label + " " + args[0] + " <amount> <reason>");
 					}
 				} else if (args.length == 2) { // Missing reason
 					if (sender instanceof Player) {
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <reason>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
 		    			}
 					} else {
-						sender.sendMessage("Usage: /" + label + args[0] + args[1] + " <reason>");
+						sender.sendMessage("Usage: /" + label + " " + args[0] + " " + args[1] + " <reason>");
 					}
 				} else if (args.length > 2) { // Correctly formatted query
 					if (sender instanceof Player) { // Player output
@@ -331,23 +331,23 @@ public class CommandListener implements CommandExecutor {
 					if (sender instanceof Player) {
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <amount> <reason>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
 		    			}
 					} else {
-						sender.sendMessage("Usage: /" + label + args[0] + " <amount> <reason>");
+						sender.sendMessage("Usage: /" + label + " " + args[0] + " <amount> <reason>");
 					}
 				} else if (args.length == 2) { // Missing reason
 					if (sender instanceof Player) {
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) {
-		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <reason>");
+		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
 		    			}
 					} else {
-						sender.sendMessage("Usage: /" + label + args[0] + args[1] + " <reason>");
+						sender.sendMessage("Usage: /" + label + " " + args[0] + " " + args[1] + " <reason>");
 					}
 				} else if (args.length > 2) { // Correctly formatted query
 					if (sender instanceof Player) { // Player output
@@ -376,11 +376,11 @@ public class CommandListener implements CommandExecutor {
 	    			Player player = (Player)sender;
 	    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) { // Can transfer
 	    				if (args.length == 1) { // Usage dialog
-	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <player> <amount> <reason>");
+	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <player> <amount> <reason>");
 	    				} else if (args.length == 2) { // Missing amount and reason
-	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + " <amount> <reason>");
+	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <amount> <reason>");
 	    				} else if (args.length == 3) { // Missing reason
-	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + args[1] + args[2] + " <reason>");
+	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " " + args[2] + " <reason>");
 	    				} else if (args.length > 3) { // Correctly formatted query
 	    					if (plugin.hasAccount(args[1])) { // Check if recipient exists
 	    						try {
@@ -404,6 +404,7 @@ public class CommandListener implements CommandExecutor {
 					sender.sendMessage("This command must be run by a player while in game.");
 				}
 			}
+		return true;
 		}
 		return false;
 	}

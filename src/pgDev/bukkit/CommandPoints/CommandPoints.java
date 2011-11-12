@@ -213,10 +213,10 @@ public class CommandPoints extends JavaPlugin {
     
     // Give a user points
     protected void addPoints(String playerName, double amount, String reason, Plugin plugin) {
-    	if (playerPoints.containsKey(playerName)) {
-    		playerPoints.put(playerName, new Double(playerPoints.get(playerName).doubleValue() + amount));
+    	if (playerPoints.containsKey(playerName.toLowerCase())) {
+    		playerPoints.put(playerName.toLowerCase(), new Double(playerPoints.get(playerName.toLowerCase()).doubleValue() + amount));
     	} else {
-    		playerPoints.put(playerName, new Double(amount));
+    		playerPoints.put(playerName.toLowerCase(), new Double(amount));
     	}
     	
     	// Save database
@@ -246,8 +246,8 @@ public class CommandPoints extends JavaPlugin {
     
     // Remove a user's points
     protected void removePoints(String playerName, double amount, String reason, Plugin plugin) {
-    	if (playerPoints.containsKey(playerName)) {
-    		playerPoints.put(playerName, new Double(playerPoints.get(playerName).doubleValue() - amount));
+    	if (playerPoints.containsKey(playerName.toLowerCase())) {
+    		playerPoints.put(playerName.toLowerCase(), new Double(playerPoints.get(playerName.toLowerCase()).doubleValue() - amount));
     	}
     	
     	// Save database
@@ -271,8 +271,8 @@ public class CommandPoints extends JavaPlugin {
     
     // Set a user's points
     protected void setPoints(String playerName, double amount, Plugin plugin) {
-    	if (playerPoints.containsKey(playerName)) {
-    		playerPoints.put(playerName, amount);
+    	if (playerPoints.containsKey(playerName.toLowerCase())) {
+    		playerPoints.put(playerName.toLowerCase(), amount);
     	}
     	
     	// Save database
@@ -293,7 +293,7 @@ public class CommandPoints extends JavaPlugin {
     		thelogger.logCheck(EventType.CHECK, playerName, plugin.getDescription().getName());
     	}
     	
-    	return playerPoints.get(playerName).doubleValue();
+    	return playerPoints.get(playerName.toLowerCase()).doubleValue();
     }
     
     // Check if the user's account contains at least a certain number of points
@@ -307,7 +307,7 @@ public class CommandPoints extends JavaPlugin {
     
     // Create a user account
     protected void makeAccount(String playerName, Plugin plugin) {
-    	playerPoints.put(playerName, (double)0);
+    	playerPoints.put(playerName.toLowerCase(), (double)0);
     	
     	// Save database
     	if (!pluginSettings.reduceOverhead) {
@@ -322,7 +322,7 @@ public class CommandPoints extends JavaPlugin {
     
     // Check if player has an account
     protected boolean hasAccount(String playerName) {
-    	return playerPoints.containsKey(playerName);
+    	return playerPoints.containsKey(playerName.toLowerCase());
     }
     
     // Clear all points
