@@ -298,7 +298,7 @@ public class CommandPoints extends JavaPlugin {
     
     // Check if the user's account contains at least a certain number of points
     protected boolean hasPoints(String playerName, int amount) {
-    	if (playerPoints.get(playerName) >= amount) {
+    	if (playerPoints.get(playerName.toLowerCase()) >= amount) {
     		return true;
     	} else {
     		return false;
