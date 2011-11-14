@@ -38,10 +38,10 @@ public class CommandListener implements CommandExecutor {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " reset - Clears the CommandPoints database");
 		    			}
 	    				if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
-		    				player.sendMessage(ChatColor.GREEN + "/" + label + " <quantity> - Gives all users a certain amount of points.");
+		    				player.sendMessage(ChatColor.GREEN + "/" + label + "giveall <quantity> - Gives all users a certain amount of points.");
 		    			}
 	    				if (plugin.hasPermissions(player, "CommandPoints.remove.all")){
-		    				player.sendMessage(ChatColor.GREEN + "/" + label + " <quantity> - Removes a specified amount of points from all users");
+		    				player.sendMessage(ChatColor.GREEN + "/" + label + "removeall <quantity> - Removes a specified amount of points from all users");
 		    			}
 	    				if (plugin.hasPermissions(player, "CommandPoints.transfer")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " transfer <username> <quantity> - Transfers a specified number of points from your account to another");
