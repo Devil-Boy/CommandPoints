@@ -17,6 +17,16 @@ permissions:
         default: op
         description: Gives access to all CommandPoints commands.
         children:
+            CommandPoints.help: true
+            CommandPoints.points: true
+            CommandPoints.points.other: true
+            CommandPoints.give: true
+            CommandPoints.remove: true
+            CommandPoints.set: true
+            CommandPoints.reset: true
+            CommandPoints.give.all: true
+            CommandPoints.remove.all: true
+            CommandPoints.transfer: true
     CommandPoints.help:
         default: true
         description: Can run the help command.
