@@ -192,7 +192,7 @@ public class CommandListener implements CommandExecutor {
 		    				if (plugin.hasAccount(args[1])) { // Does the player exist?
 		    					try {
 			    					plugin.removePoints(args[1], Integer.parseInt(args[2]), remainingWords(args, 3), plugin);
-			    					player.sendMessage(ChatColor.GOLD + "You gave removed " + args[2] + " points from " + args[1] + "'s account.");
+			    					player.sendMessage(ChatColor.GOLD + "You removed " + args[2] + " points from " + args[1] + "'s account.");
 			    				} catch (NumberFormatException e) {
 			    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
 			    				}
