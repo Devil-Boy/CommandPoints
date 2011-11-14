@@ -1,0 +1,2 @@
+-Tells person when an admin gives them points
+-A reason is not required to transfer points
