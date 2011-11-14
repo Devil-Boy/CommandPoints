@@ -14,11 +14,11 @@ import pgDev.bukkit.CommandPoints.CommandPoints.EventType;
 public class FlatFileLogger extends TransLogger {
 	
 	PrintWriter out;
-	
-	public void FlatFileLogger() {
+
+	public FlatFileLogger(String directory) {
 		
 		try {
-			FileWriter outFile = new FileWriter("./plugins/CommandPoints/PointEventLog.txt", true);
+			FileWriter outFile = new FileWriter(directory, true);
 			PrintWriter out = new PrintWriter(outFile);
 		} catch (IOException e) {
 			System.out.println("Cannot write to the directory!");

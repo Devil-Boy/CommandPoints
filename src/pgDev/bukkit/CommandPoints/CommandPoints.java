@@ -92,7 +92,7 @@ public class CommandPoints extends JavaPlugin {
     		savePointsDatabase();
         }
         
-        thelogger = new FlatFileLogger();
+        thelogger = new FlatFileLogger(pointEventLogLocation);
     	
     	// Register our events
         PluginManager pm = getServer().getPluginManager();
