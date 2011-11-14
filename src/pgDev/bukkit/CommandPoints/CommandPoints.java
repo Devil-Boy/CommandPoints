@@ -81,7 +81,7 @@ public class CommandPoints extends JavaPlugin {
         		System.out.println("CommandPoints Configuration created!");
         	}
         } catch (Exception e) {
-        	System.out.println("Could not load configuration! " + e);
+        	System.out.println("Could not load CommandPoints configuration! " + e);
         }
         
         // Load the Points Database
