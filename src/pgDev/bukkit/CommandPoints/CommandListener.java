@@ -374,7 +374,7 @@ public class CommandListener implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("transfer")) { // Transfer Points (0=transfer, 1=otherplayer, 2=amount, 3+=reason)
 				if (sender instanceof Player) {
 	    			Player player = (Player)sender;
-	    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) { // Can transfer
+	    			if (plugin.hasPermissions(player, "CommandPoints.transfer")) { // Can transfer
 	    				if (args.length == 1) { // Usage dialog
 	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <player> <amount> <reason>");
 	    				} else if (args.length == 2) { // Missing amount and reason
