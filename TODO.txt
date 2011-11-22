@@ -1,2 +1,4 @@
--Tells person when an admin gives them points
--A reason is not required to transfer points
+-Tells person when an admin gives them points [Done]
+-A reason is not required to transfer points [Done]
+-Make it so that the plugin can run even after the flatfilelogger fails. [Done]
+-fix it saying "1 points" [Done]

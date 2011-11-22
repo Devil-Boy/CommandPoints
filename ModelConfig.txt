@@ -26,3 +26,8 @@ logEvents=gain loss
 #	recommended and should only be used by those
 #	who understand its consequences.
 reduceOverhead=false
+
+# Receive Notify
+#	With this set to true, players will be notified
+#	when you manually grant them commandpoints.
+receiveNotify=true

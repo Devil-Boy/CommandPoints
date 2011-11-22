@@ -25,6 +25,7 @@ public class Configuration {
 	boolean gainlossConsoleOutput;
 	String logEvents;
 	boolean reduceOverhead;
+	boolean receiveNotify;
 	
 	public Configuration(Properties p, final CommandPoints plugin) {
         properties = p;
@@ -34,6 +35,7 @@ public class Configuration {
         gainlossConsoleOutput = getBoolean("gainlossConsoleOutput", false);
         logEvents = getString("logEvents", "gain loss");
         reduceOverhead = getBoolean("reduceOverhead", false);
+        receiveNotify = getBoolean("receiveNotify", true);
 	}
 	
 	// Value obtaining functions down below
@@ -176,6 +178,11 @@ public class Configuration {
     		out.write("#	recommended and should only be used by those\r\n");
     		out.write("#	who understand its consequences.\r\n");
     		out.write("reduceOverhead=" + reduceOverhead + "\r\n");
+    		out.write("\r\n");
+    		out.write("# Receive Notify\r\n");
+    		out.write("#	With this set to true, players will be notified\r\n");
+    		out.write("#	when you manually grant them commandpoints.\r\n");
+    		out.write("receiveNotify=" + receiveNotify + "\r\n");
     		out.close();
     	} catch (Exception e) {
     		System.out.println(e);

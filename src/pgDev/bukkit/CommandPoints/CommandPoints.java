@@ -11,6 +11,7 @@ import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
@@ -92,7 +93,10 @@ public class CommandPoints extends JavaPlugin {
     		savePointsDatabase();
         }
         
-        thelogger = new FlatFileLogger(pointEventLogLocation);
+        // Logging Off
+        thelogger = new NoLogging();
+        //thelogger = new FlatFileLogger(pointEventLogLocation);
+        
     	
     	// Register our events
         PluginManager pm = getServer().getPluginManager();
@@ -239,9 +243,9 @@ public class CommandPoints extends JavaPlugin {
     }
     
     // Transfer points
-    protected void transferPoints(String giver, String receiver, int amount, String reason, Plugin plugin) {
-    	removePoints(giver, amount, reason, plugin);
-    	addPoints(receiver, amount, reason, plugin);
+    protected void transferPoints(String giver, String receiver, int amount, Plugin plugin) {
+    	removePoints(giver, amount, "Transferred to " + receiver, plugin);
+    	addPoints(receiver, amount, "Transferred from " + giver, plugin);
     }
     
     // Remove a user's points
