@@ -168,8 +168,13 @@ public class CommandListener implements CommandExecutor {
 					} else { // Console Output
 						if (plugin.hasAccount(args[1])) { // Check if recipient exists
 							try {
-		    					plugin.addPoints(args[1], Integer.parseInt(args[2]), remainingWords(args, 3), plugin);
-		    					sender.sendMessage("You gave " + args[1] + " " + args[2] + " points.");
+								int numPoints = Integer.parseInt(args[2]);
+		    					plugin.addPoints(args[1], numPoints, remainingWords(args, 3), plugin);
+		    					if (numPoints == 1) {
+		    						sender.sendMessage("You gave " + args[1] + " " + args[2] + " point.");
+		    					} else {
+		    						sender.sendMessage("You gave " + args[1] + " " + args[2] + " points.");
+		    					}
 		    				} catch (NumberFormatException e) {
 		    					sender.sendMessage("The amount you specified was invalid.");
 		    				}
@@ -380,8 +385,13 @@ public class CommandListener implements CommandExecutor {
 		    			}
 					} else { // Console output
 						try {
-	    					plugin.addPointsAll(Integer.parseInt(args[1]), remainingWords(args, 2), plugin);
-	    					sender.sendMessage("You have given everyone " + args[1] + " points.");
+							int numPoints = Integer.parseInt(args[1]);
+	    					plugin.addPointsAll(numPoints, remainingWords(args, 2), plugin);
+	    					if (numPoints == 1) {
+	    						sender.sendMessage("You have given everyone " + args[1] + " point.");
+	    					} else {
+	    						sender.sendMessage("You have given everyone " + args[1] + " points.");
+	    					}
 	    				} catch (NumberFormatException e) {
 	    					sender.sendMessage("The amount you specified was invalid.");
 	    				}
@@ -415,8 +425,13 @@ public class CommandListener implements CommandExecutor {
 		    			Player player = (Player)sender;
 		    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) {
 		    				try {
-		    					plugin.removePointsAll(Integer.parseInt(args[1]), remainingWords(args, 2), plugin);
-		    					player.sendMessage(ChatColor.GOLD + "You have taken " + args[1] + " points from everyone.");
+		    					int numPoints = Integer.parseInt(args[1]);
+		    					plugin.removePointsAll(numPoints, remainingWords(args, 2), plugin);
+		    					if (numPoints == 1) {
+		    						player.sendMessage(ChatColor.GOLD + "You have taken " + args[1] + " point from everyone.");
+		    					} else {
+		    						player.sendMessage(ChatColor.GOLD + "You have taken " + args[1] + " points from everyone.");
+		    					}
 		    				} catch (NumberFormatException e) {
 		    					player.sendMessage(ChatColor.RED + "The amount you specified was invalid.");
 		    				}
