@@ -11,7 +11,6 @@ import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
