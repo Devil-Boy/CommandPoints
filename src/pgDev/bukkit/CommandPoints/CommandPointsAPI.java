@@ -12,11 +12,9 @@ public class CommandPointsAPI {
 	
 	/**
 	 * CommandPointsAPI Constructor
-	 * @param playerName The player receiving the points
-	 * @param amount How many points
-	 * @param reason Why he's getting the points
+	 * @param pluginI The CommandPoints plugin on the server
 	 */
-	public CommandPointsAPI(CommandPoints pluginI) {
+	protected CommandPointsAPI(CommandPoints pluginI) {
 		cp = pluginI;
 	}
 	
@@ -28,6 +26,7 @@ public class CommandPointsAPI {
 	 * @param playerName The player receiving the points
 	 * @param amount How many points
 	 * @param reason Why he's getting the points
+	 * @param plugin The plugin running this method
 	 */
 	public void addPoints(String playerName, int amount, String reason, Plugin plugin) {
 		cp.addPoints(playerName, amount, reason, plugin);
@@ -38,6 +37,7 @@ public class CommandPointsAPI {
 	 * @param playerName The player losing the points
 	 * @param amount How many points
 	 * @param reason Why he's losing the points
+	 * @param plugin The plugin running this method
 	 */
 	public void removePoints(String playerName, int amount, String reason, Plugin plugin) {
 		cp.removePoints(playerName, amount, reason, plugin);
@@ -53,6 +53,7 @@ public class CommandPointsAPI {
 	 * @param playerName The player losing the points
 	 * @param amount How many points
 	 * @param reason Why he's losing the points
+	 * @param plugin The plugin running this method
 	 */
 	@Deprecated
 	public void removePointsNoCheck(String playerName, int amount, String reason, Plugin plugin) {
@@ -63,6 +64,7 @@ public class CommandPointsAPI {
 	 * Set the amount of points a player has
 	 * @param playerName The player getting his points set
 	 * @param amount How many points
+	 * @param plugin The plugin running this method
 	 */
 	public void setPoints(String playerName, int amount, Plugin plugin) {
 		cp.setPoints(playerName, amount, plugin);
@@ -71,6 +73,7 @@ public class CommandPointsAPI {
 	/**
 	 * Get how many points a player has
 	 * @param playerName The player we want to find about
+	 * @param plugin The plugin running this function
 	 * @return How many points the player has
 	 */
 	public int getPoints(String playerName, Plugin plugin) {
@@ -80,6 +83,7 @@ public class CommandPointsAPI {
 	/**
 	 * Check if the given player has an account
 	 * @param playerName The player we want to find about
+	 * @param plugin The plugin running this function
 	 * @return Whether or not the player has an account
 	 */
 	public boolean hasAccount(String playerName, Plugin plugin) {
@@ -90,6 +94,7 @@ public class CommandPointsAPI {
 	 * Check if the given player has at least the given amount of points
 	 * @param playerName The player we want to find about
 	 * @param amount The amount of points we're checking for
+	 * @param plugin The plugin running this function
 	 * @return Whether or not the player has at least that many points
 	 */
 	public boolean hasPoints(String playerName, int amount, Plugin plugin) {
