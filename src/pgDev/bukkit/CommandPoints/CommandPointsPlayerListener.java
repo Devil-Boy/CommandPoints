@@ -1,14 +1,14 @@
 package pgDev.bukkit.CommandPoints;
 
+import org.bukkit.event.*;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerListener;
 
 /**
  * Handle events for all Player related events
  * 
  * @author PG Dev Team (Devil Boy)
  */
-public class CommandPointsPlayerListener extends PlayerListener {
+public class CommandPointsPlayerListener implements Listener {
     private final CommandPoints plugin;
 
     public CommandPointsPlayerListener(CommandPoints instance) {
@@ -17,6 +17,7 @@ public class CommandPointsPlayerListener extends PlayerListener {
 
     // Event functions below
     
+    @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
     	if (!plugin.hasAccount(event.getPlayer().getName())) {
     		plugin.makeAccount(event.getPlayer().getName(), plugin);

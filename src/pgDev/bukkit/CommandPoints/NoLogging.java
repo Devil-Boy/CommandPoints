@@ -8,7 +8,7 @@ import pgDev.bukkit.CommandPoints.CommandPoints.EventType;
  * @author PG Dev Team (Devil Boy)
  */
 
-public class NoLogging extends TransLogger{
+public class NoLogging extends TransLogger {
 	
 	public NoLogging() {
 		

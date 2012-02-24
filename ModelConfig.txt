@@ -31,3 +31,13 @@ reduceOverhead=false
 #	With this set to true, players will be notified
 #	when you manually grant them commandpoints.
 receiveNotify=true
+
+# Logging
+#	Use the following values to choose the type of
+#	logging you would want:
+#		0 - No logging
+#		1 - Flat-file logging
+#			(Outputs to PointEventLog.txt)
+#		2 - MySQL 
+#			(You give credentials in LogMySQL.cfg)
+logType=0

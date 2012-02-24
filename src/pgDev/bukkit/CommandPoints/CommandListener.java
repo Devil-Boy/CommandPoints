@@ -22,7 +22,7 @@ public class CommandListener implements CommandExecutor {
 	    				if (plugin.hasPermissions(player, "CommandPoints.points")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " points - Tells you your amount of points");
 		    			}
-	    				if( plugin.hasPermissions(player, "CommandPoints.points.other")) {
+	    				if (plugin.hasPermissions(player, "CommandPoints.points.other")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " points <username> - Tells you the amount of points another player has");
 		    			}
 	    				if (plugin.hasPermissions(player, "CommandPoints.give")) {
@@ -488,9 +488,14 @@ public class CommandListener implements CommandExecutor {
 					sender.sendMessage("This command must be run by a player while in game.");
 				}
 			}
-		return true;
+		} else if (label.equalsIgnoreCase("points")) {
+			if (sender instanceof Player) {
+    			((Player)sender).performCommand("cp points");
+			} else {
+				sender.sendMessage("You must be a player to run this command.");
+			}
 		}
-		return false;
+		return true;
 	}
 	
 	// List Words After Specified Index

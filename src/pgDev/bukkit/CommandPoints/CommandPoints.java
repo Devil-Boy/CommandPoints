@@ -13,8 +13,6 @@ import java.util.Set;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -99,17 +97,17 @@ public class CommandPoints extends JavaPlugin {
     	
     	// Register our events
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
+        pm.registerEvents(playerListener, this);
         
         // Send commands to the executor
-        PluginCommand fullCommand = this.getCommand("commandpoints");
-        fullCommand.setExecutor(commandListener);
-        try {
-	        PluginCommand shortCommand = this.getCommand("cp");
-	        shortCommand.setExecutor(commandListener);
-	        //((PluginCommand)this.getCommand("cp")).setExecutor(commandListener); Made this line for fun, probably shouldn't be used though.
-        }catch (NullPointerException e) {
-        	System.out.println("CommandPoints: Another plugin is using /cp, please use /commandpoints");
+        String[] commands = {"commandpoints", "cp", "points"};
+        for (String command : commands) {
+        	try {
+    	        PluginCommand cmd = this.getCommand(command);
+    	        cmd.setExecutor(commandListener);
+            } catch (NullPointerException e) {
+            	System.out.println("CommandPoints: Another plugin is using /" + command + ". You will have to use an alternative.");
+            }
         }
         
         // Permissions turn on!
@@ -159,9 +157,7 @@ public class CommandPoints extends JavaPlugin {
     
     
     // Database loading and saving
-    
     protected void loadPointsDatabase() {
-
 		// check for existing file
 		File configFile = new File(pointsDBLocation);
 		
@@ -183,14 +179,11 @@ public class CommandPoints extends JavaPlugin {
 			} catch (IOException e) {
 				
 			}
-		}else {
+		} else {
 			System.out.println("[CommandPoints] Points file not found, creating it.");
 			savePointsDatabase();
 		}
-		
 	}
-
-
 
 	protected void savePointsDatabase() {
 		try {
