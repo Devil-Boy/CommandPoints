@@ -464,6 +464,10 @@ public class CommandListener implements CommandExecutor {
 	    					if (plugin.hasAccount(args[1])) { // Check if recipient exists
 	    						try {
 	    							int numPoints = Integer.parseInt(args[2]);
+	    							if(numPoints < 1) {
+	    								player.sendMessage(ChatColor.RED + "Sorry, no stealing points!");
+	    								return true;
+	    							}
 	    							if (plugin.hasPoints(player.getName(), numPoints)) { // Check if giver has enough points
 	    								plugin.transferPoints(player.getName(), args[1], numPoints, plugin);
 	    								if (numPoints == 1) {
