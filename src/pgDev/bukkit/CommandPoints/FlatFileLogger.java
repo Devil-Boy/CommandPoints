@@ -1,8 +1,9 @@
 package pgDev.bukkit.CommandPoints;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import pgDev.bukkit.CommandPoints.CommandPoints.EventType;
 
@@ -13,16 +14,21 @@ import pgDev.bukkit.CommandPoints.CommandPoints.EventType;
  */
 public class FlatFileLogger extends TransLogger {
 	
-	PrintWriter out;
+	private Logger logger = Logger.getLogger("CommandPoints");
 	
 	// Toggle for failure
 	boolean failure = false;
 
 	public FlatFileLogger(String directory) {
+
+		
 		
 		try {
-			FileWriter outFile = new FileWriter(directory, true);
-			out = new PrintWriter(outFile);
+			logger.setLevel(Level.FINEST);
+		    FileHandler fileTxt = new FileHandler(directory, true);
+		    fileTxt.setFormatter(new CPLogFormatter());
+		    logger.addHandler(fileTxt);
+		    logger.setUseParentHandlers(false);
 		} catch (IOException e) {
 			failure = true;
 			System.out.println("Cannot write to the directory! CommandPoints will continue running without logging.");
@@ -35,10 +41,10 @@ public class FlatFileLogger extends TransLogger {
 		if (failure) return; // Allows us to continue without nullpointer
 		
 		if(type == EventType.GAIN) {
-			out.println(player + " has recieved " + amount + " points from a transaction.");
+			logger.info(player + " has recieved " + amount + " points. Reason: " + reason);
 		}
 		if(type == EventType.LOSS) {
-			out.println(player + " has lost " + amount + " points from a transaction.");
+			logger.info(player + " has lost " + amount + " points. Reason: " + reason);
 		}
 
 	}
@@ -47,21 +53,21 @@ public class FlatFileLogger extends TransLogger {
 	public void logCheck(EventType type, String player, String plugin) {
 		if (failure) return; // Allows us to continue without nullpointer
 		
-		out.println(player + "has checked how many points s/he has.");
+		logger.info(player + "has checked how many points s/he has.");
 	}
 
 	@Override
 	public void logMisc(String logOutput) {
 		if (failure) return; // Allows us to continue without nullpointer
 		
-		out.println(logOutput);
+		logger.info(logOutput);
 	}
 
 	@Override
 	public void logPointSet(EventType type, String player, double amount, String plugin) {
 		if (failure) return; // Allows us to continue without nullpointer
 		
-		out.println(player + " has had their points set to " + amount + " points.");
+		logger.info(player + " has had their points set to " + amount + " points.");
 	}
 
 }

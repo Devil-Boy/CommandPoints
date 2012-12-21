@@ -26,6 +26,8 @@ public class Configuration {
 	String logEvents;
 	boolean reduceOverhead;
 	boolean receiveNotify;
+	int initialcp = 0;
+	String logtype = "none";
 	
 	public Configuration(Properties p, final CommandPoints plugin) {
         properties = p;
@@ -36,17 +38,18 @@ public class Configuration {
         logEvents = getString("logEvents", "gain loss");
         reduceOverhead = getBoolean("reduceOverhead", false);
         receiveNotify = getBoolean("receiveNotify", true);
+        try {
+            initialcp = getInt("initialcp", 5);
+            logtype = getString("logtype");
+        }catch(NoSuchElementException e) {
+        	createConfig();
+        }
 	}
 	
 	// Value obtaining functions down below
-	public int getInt(String label, int thedefault) {
-		String value;
-        try {
-        	value = getString(label);
-        	return Integer.parseInt(value);
-        } catch (NoSuchElementException e) {
-        	return thedefault;
-        }
+	public int getInt(String label, int thedefault) throws NoSuchElementException {
+		String value = getString(label);
+    	return Integer.parseInt(value);
     }
     
     public double getDouble(String label) throws NoSuchElementException {
@@ -172,6 +175,11 @@ public class Configuration {
     		out.write("#		newaccount - Whenever a new account is made\r\n");
     		out.write("logEvents=" + logEvents + "\r\n");
     		out.write("\r\n");
+    		out.write("# Log Type\r\n");
+    		out.write("#	This sets the logger type. At the moment it can\r\n");
+    		out.write("#	either be none or file.\r\n");
+    		out.write("logtype=" + logtype + "\r\n");
+    		out.write("\r\n");
     		out.write("# Reduce overhead\r\n");
     		out.write("#	With this set as true, the points database will\r\n");
     		out.write("#	only be saved on a clean server stop. This is not\r\n");
@@ -183,6 +191,11 @@ public class Configuration {
     		out.write("#	With this set to true, players will be notified\r\n");
     		out.write("#	when you manually grant them commandpoints.\r\n");
     		out.write("receiveNotify=" + receiveNotify + "\r\n");
+    		out.write("\r\n");
+    		out.write("# Initial CP\r\n");
+    		out.write("#	This sets how many command points new players\r\n");
+    		out.write("#	start out with.\r\n");
+    		out.write("initialcp=" + initialcp + "\r\n");
     		out.close();
     	} catch (Exception e) {
     		System.out.println(e);

@@ -18,9 +18,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.PluginManager;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
-
 /**
  * CommandPoints for Bukkit
  *
@@ -30,9 +27,6 @@ public class CommandPoints extends JavaPlugin {
 	// Listeners
     private final CommandPointsPlayerListener playerListener = new CommandPointsPlayerListener(this);
     private final CommandListener commandListener = new CommandListener(this);
-    
-    // Permissions Integration
-    private static PermissionHandler Permissions;
     
     // Player Points Database
     protected HashMap<String, Integer> playerPoints = new HashMap<String, Integer>();
@@ -91,7 +85,11 @@ public class CommandPoints extends JavaPlugin {
         }
         
         // Logging Off
-        thelogger = new NoLogging();
+        if(pluginSettings.logtype.equalsIgnoreCase("file")) {
+        	thelogger = new FlatFileLogger(pointEventLogLocation);
+        }else {
+            thelogger = new NoLogging();
+        }
         //thelogger = new FlatFileLogger(pointEventLogLocation);
         
     	
@@ -109,9 +107,6 @@ public class CommandPoints extends JavaPlugin {
             	System.out.println("CommandPoints: Another plugin is using /" + command + ". You will have to use an alternative.");
             }
         }
-        
-        // Permissions turn on!
-    	setupPermissions();
 
         // Console output (Tells us we're alive)
         PluginDescriptionFile pdfFile = this.getDescription();
@@ -122,25 +117,9 @@ public class CommandPoints extends JavaPlugin {
         // Console output (Tells us we've died)
         System.out.println("CommandPoints disabled!");
     }
-    
-    // Permissions Methods
-    private void setupPermissions() {
-        Plugin permissions = this.getServer().getPluginManager().getPlugin("Permissions");
 
-        if (Permissions == null) {
-            if (permissions != null) {
-                Permissions = ((Permissions)permissions).getHandler();
-            } else {
-            }
-        }
-    }
-    
     protected boolean hasPermissions(Player player, String node) {
-        if (Permissions != null) {
-        	return Permissions.has(player, node);
-        } else {
-            return player.hasPermission(node);
-        }
+    	return player.hasPermission(node);
     }
     
     
@@ -302,8 +281,8 @@ public class CommandPoints extends JavaPlugin {
     }
     
     // Create a user account
-    protected void makeAccount(String playerName, Plugin plugin) {
-    	playerPoints.put(playerName.toLowerCase(), 0);
+    protected void makeAccount(String playerName, Plugin plugin, int points) {
+    	playerPoints.put(playerName.toLowerCase(), points);
     	
     	// Save database
     	if (!pluginSettings.reduceOverhead) {
@@ -313,6 +292,9 @@ public class CommandPoints extends JavaPlugin {
     	// To the logger!
     	if (pluginSettings.logEvents.contains("newaccount")) {
     		thelogger.logCheck(EventType.NEWACCOUNT, playerName, plugin.getDescription().getName());
+    	}
+    	if(points > 0 && pluginSettings.logEvents.contains("gain")) {
+    		thelogger.logPointSet(EventType.POINTSET, playerName, points, "CommandPoints");
     	}
     }
     

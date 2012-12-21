@@ -20,7 +20,7 @@ public class CommandPointsPlayerListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
     	if (!plugin.hasAccount(event.getPlayer().getName())) {
-    		plugin.makeAccount(event.getPlayer().getName(), plugin);
+    		plugin.makeAccount(event.getPlayer().getName(), plugin, plugin.pluginSettings.initialcp);
     	}
     }
 }
