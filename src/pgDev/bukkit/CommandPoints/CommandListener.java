@@ -18,32 +18,32 @@ public class CommandListener implements CommandExecutor {
 			if (args.length == 0) { // Help Response
 				if (sender instanceof Player) { // Player Help
 	    			Player player = (Player)sender;
-	    			if (plugin.hasPermissions(player, "CommandPoints.help") ){
-	    				if (plugin.hasPermissions(player, "CommandPoints.points")) {
+	    			if (plugin.hasPermissions(player, "commandpoints.help") ){
+	    				if (plugin.hasPermissions(player, "commandpoints.points")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " points - Tells you your amount of points");
 		    			}
-	    				if (plugin.hasPermissions(player, "CommandPoints.points.other")) {
+	    				if (plugin.hasPermissions(player, "commandpoints.points.other")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " points <username> - Tells you the amount of points another player has");
 		    			}
-	    				if (plugin.hasPermissions(player, "CommandPoints.give")) {
+	    				if (plugin.hasPermissions(player, "commandpoints.give")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " give <username> <quantity> - Gives a user a specified number of points");
 		    			}
-	    				if (plugin.hasPermissions(player, "CommandPoints.remove")) {
+	    				if (plugin.hasPermissions(player, "commandpoints.remove")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " remove <username> <quantity> - Removes a specified number of points from a user");
 		    			}
-	    				if (plugin.hasPermissions(player, "CommandPoints.set")) {
+	    				if (plugin.hasPermissions(player, "commandpoints.set")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " set <username> <quantity> - Sets a user to the specified number of points.");
 		    			}
-	    				if (plugin.hasPermissions(player, "CommandPoints.reset")) {
+	    				if (plugin.hasPermissions(player, "commandpoints.reset")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " reset - Clears the CommandPoints database");
 		    			}
-	    				if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
+	    				if (plugin.hasPermissions(player, "commandpoints.give.all")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + "giveall <quantity> - Gives all users a certain amount of points.");
 		    			}
-	    				if (plugin.hasPermissions(player, "CommandPoints.remove.all")){
+	    				if (plugin.hasPermissions(player, "commandpoints.remove.all")){
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + "removeall <quantity> - Removes a specified amount of points from all users");
 		    			}
-	    				if (plugin.hasPermissions(player, "CommandPoints.transfer")) {
+	    				if (plugin.hasPermissions(player, "commandpoints.transfer")) {
 		    				player.sendMessage(ChatColor.GREEN + "/" + label + " transfer <username> <quantity> - Transfers a specified number of points from your account to another");
 		    			}
 	    			} else {
@@ -63,7 +63,7 @@ public class CommandListener implements CommandExecutor {
 				if (args.length == 1) { // No playername
 					if (sender instanceof Player) { // Own points
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.points")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.points")) {
 		    				int numPoints = plugin.checkPoints(player.getName(), plugin);
 		    				if (numPoints == 1) {
 		    					player.sendMessage(ChatColor.GOLD + "You have " + numPoints + " point.");
@@ -79,7 +79,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length > 1) { // Player specified
 					if (sender instanceof Player) {
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.points.other")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.points.other")) {
 		    				if (plugin.hasAccount(args[1])) {
 		    					int numPoints = plugin.checkPoints(args[1], plugin);
 		    					if (numPoints == 1) {
@@ -101,7 +101,7 @@ public class CommandListener implements CommandExecutor {
 				if (args.length == 1) { // Usage dialog
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.give")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.give")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + args[0] + " <player> <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give points.");
@@ -112,7 +112,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length == 2) { // No Quantity or Reason
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.give")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.give")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give points.");
@@ -123,7 +123,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length == 3) { // No Reason
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.give")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.give")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " " + args[2] + " <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give points.");
@@ -134,7 +134,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length > 3) { // Correctly Formatted Query
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.give")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.give")) {
 		    				if (plugin.hasAccount(args[1])) { // Check if recipient exists
 		    					try {
 		    						int numPoints = Integer.parseInt(args[2]);
@@ -187,7 +187,7 @@ public class CommandListener implements CommandExecutor {
 				if (args.length == 1) { // Usage dialog
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.remove")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <player> <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to remove points.");
@@ -198,7 +198,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length == 2) { // No Quantity or Reason
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.remove")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to remove points.");
@@ -209,7 +209,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length == 3) { // No Reason
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.remove")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " " + args[2] + " <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to remove points.");
@@ -220,7 +220,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length > 3) { // Correctly Formatted Query
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.remove")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.remove")) {
 		    				if (plugin.hasAccount(args[1])) { // Does the player exist?
 		    					try {
 		    						int numPoints = Integer.parseInt(args[2]);
@@ -261,7 +261,7 @@ public class CommandListener implements CommandExecutor {
 				if (args.length == 1) { // Usage dialog
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.set")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.set")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <player> <amount>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to set points.");
@@ -272,7 +272,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length == 2) { // No amount given
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.set")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.set")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <amount>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to set points.");
@@ -283,7 +283,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length > 2) { // Correctly formatted query
 					if (sender instanceof Player) { // Player Output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.set")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.set")) {
 		    				if (plugin.hasAccount(args[1])) { // Does the player exist?
 		    					try {
 		    						int numPoints = Integer.parseInt(args[2]);
@@ -323,7 +323,7 @@ public class CommandListener implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("reset")) { // Reset Points
 				if (sender instanceof Player) {
 	    			Player player = (Player)sender;
-	    			if (plugin.hasPermissions(player, "CommandPoints.reset")) {
+	    			if (plugin.hasPermissions(player, "commandpoints.reset")) {
 	    				plugin.clearPoints();
 	    				player.sendMessage(ChatColor.GOLD + "Points database reset!");
 	    			} else {
@@ -337,7 +337,7 @@ public class CommandListener implements CommandExecutor {
 				if (args.length == 1) { // Usage dialog
 					if (sender instanceof Player) {
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.give.all")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
@@ -348,7 +348,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length == 2) { // Missing reason
 					if (sender instanceof Player) {
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.give.all")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
@@ -359,7 +359,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length > 2) { // Correctly formatted query
 					if (sender instanceof Player) { // Player output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.give.all")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.give.all")) {
 		    				try {
 		    					int numPoints = Integer.parseInt(args[1]);
 		    					plugin.addPointsAll(numPoints, remainingWords(args, 2), plugin);
@@ -401,7 +401,7 @@ public class CommandListener implements CommandExecutor {
 				if (args.length == 1) { // Usage dialog
 					if (sender instanceof Player) {
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.remove.all")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <amount> <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
@@ -412,7 +412,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length == 2) { // Missing reason
 					if (sender instanceof Player) {
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.remove.all")) {
 		    				player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " " + args[1] + " <reason>");
 		    			} else {
 		    				player.sendMessage(ChatColor.RED + "You do not have the permission to give everyone points.");
@@ -423,7 +423,7 @@ public class CommandListener implements CommandExecutor {
 				} else if (args.length > 2) { // Correctly formatted query
 					if (sender instanceof Player) { // Player output
 		    			Player player = (Player)sender;
-		    			if (plugin.hasPermissions(player, "CommandPoints.remove.all")) {
+		    			if (plugin.hasPermissions(player, "commandpoints.remove.all")) {
 		    				try {
 		    					int numPoints = Integer.parseInt(args[1]);
 		    					plugin.removePointsAll(numPoints, remainingWords(args, 2), plugin);
@@ -455,7 +455,7 @@ public class CommandListener implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("transfer")) { // Transfer Points (0=transfer, 1=otherplayer, 2=amount)
 				if (sender instanceof Player) {
 	    			Player player = (Player)sender;
-	    			if (plugin.hasPermissions(player, "CommandPoints.transfer")) { // Can transfer
+	    			if (plugin.hasPermissions(player, "commandpoints.transfer")) { // Can transfer
 	    				if (args.length == 1) { // Usage dialog
 	    					player.sendMessage(ChatColor.GREEN + "Usage: /" + label + " " + args[0] + " <player> <amount>");
 	    				} else if (args.length == 2) { // Missing amount
