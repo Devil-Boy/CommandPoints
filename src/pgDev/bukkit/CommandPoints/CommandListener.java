@@ -470,6 +470,16 @@ public class CommandListener implements CommandExecutor {
 	    							}
 	    							if (plugin.hasPoints(player.getName(), numPoints)) { // Check if giver has enough points
 	    								plugin.transferPoints(player.getName(), args[1], numPoints, plugin);
+										if (this.plugin.pluginSettings.receiveNotify) { //tell recipient
+											Player beneficiary = this.plugin.getServer().getPlayer(args[1]);
+											if (beneficiary != null) {
+												if (numPoints == 1) {
+													beneficiary.sendMessage(ChatColor.GOLD + player.getName() + " transferred " + args[2] + " point to you!");
+												} else {
+													beneficiary.sendMessage(ChatColor.GOLD + player.getName() + " transferred " + args[2] + " points to you!");
+												}
+											}
+										}
 	    								if (numPoints == 1) {
 	    									player.sendMessage(ChatColor.GOLD + "You have given " + args[2] + " point to " + args[1]);
 	    								} else {
