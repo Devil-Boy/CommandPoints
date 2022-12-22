@@ -175,6 +175,17 @@ public class CommandListener implements CommandExecutor {
 		    					} else {
 		    						sender.sendMessage("You gave " + args[1] + " " + args[2] + " points.");
 		    					}
+								// Tell the player they got points
+								if (plugin.pluginSettings.receiveNotify) {
+									Player beneficiary = plugin.getServer().getPlayer(args[1]);
+									if (beneficiary != null) {
+										if (numPoints == 1) {
+											beneficiary.sendMessage(ChatColor.GOLD + "You got " + args[2] + " point!");
+										} else {
+											beneficiary.sendMessage(ChatColor.GOLD + "You got " + args[2] + " points!");
+										}
+									}
+								}
 		    				} catch (NumberFormatException e) {
 		    					sender.sendMessage("The amount you specified was invalid.");
 		    				}
