@@ -1,7 +1,8 @@
 name: CommandPoints
 main: pgDev.bukkit.CommandPoints.CommandPoints
-version: 1.0
-author: PG Dev Team
+version: 1.1.1
+api-version: 1.16
+author: PG Dev Team Modified by Momshroom
 authors: [Devil Boy, Tux2, Nat]
 description: A command-based merit system.
 

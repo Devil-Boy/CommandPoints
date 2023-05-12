@@ -1,0 +1,64 @@
+name: CommandPoints
+main: pgDev.bukkit.CommandPoints.CommandPoints
+version: 1.1.2
+api-version: 1.16
+author: PG Dev Team Modified by Momshroom
+authors: [Devil Boy, Tux2, Nat]
+description: A command-based merit system.
+
+commands:
+   commandpoints:
+      description: CommandPoints main command!
+      usage: /<command>
+   cp:
+      description: Alternative to the "commandpoints" command.
+      usage: /<command>
+   points:
+      description: Alternative to the "cp points" command.
+      usage: /<command>
+
+permissions:
+    commandpoints.*:
+        default: op
+        description: Gives access to all CommandPoints commands.
+        children:
+            commandpoints.help: true
+            commandpoints.points: true
+            commandpoints.points.other: true
+            commandpoints.give: true
+            commandpoints.remove: true
+            commandpoints.set: true
+            commandpoints.reset: true
+            commandpoints.give.all: true
+            commandpoints.remove.all: true
+            commandpoints.transfer: true
+    commandpoints.help:
+        default: true
+        description: Can run the help command.
+    commandpoints.points:
+        default: true
+        description: Can check own number points.
+    commandpoints.points.other:
+        default: op
+        description: Can check other users' number of points.
+    commandpoints.give:
+        default: op
+        description: Can give users points.
+    commandpoints.remove:
+        default: op
+        description: Can remove points from a player.
+    commandpoints.set:
+        default: op
+        description: Can set a user to a certain amount of points.
+    commandpoints.reset:
+        default: op
+        description: Can reset the CommandPoints database.
+    commandpoints.give.all:
+        default: op
+        description: Can give all users points at the same time.
+    commandpoints.remove.all:
+        default: op
+        description: Can remove points from all users at the same time.
+    commandpoints.transfer:
+        default: true
+        description: Can transfer points to another user.
